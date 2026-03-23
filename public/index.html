@@ -1,1095 +1,3093 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Motherhood Penalty — Takeda × IBM Consulting</title>
+<title>The Motherhood Penalty — Takeda Global Benefits Analytics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400;1,8..60,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-/* ── CSS Custom Properties ─────────────────────────────────── */
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
 :root {
   --navy: #1a1a2e;
+  --navy-deep: #0f0f1a;
   --cream: #f8f6f0;
   --warm-gray: #f5f5f5;
   --accent-red: #e63946;
+  --accent-red-dark: #c1121f;
   --blue: #457b9d;
+  --blue-light: #a8dadc;
   --sage: #2a9d8f;
+  --sage-light: #b7e4c7;
   --text: #2d2d2d;
   --text-light: #666;
   --text-muted: #999;
   --border: #e0ddd5;
   --card-bg: #ffffff;
-  --bg: #ffffff;
+  --body-bg: #f8f6f0;
+  --chart-bg: #ffffff;
   --hero-bg: #1a1a2e;
-  --female: #e85d75;
-  --male: #4a90d9;
-  --font-headline: 'Playfair Display', Georgia, serif;
-  --font-body: 'Source Serif 4', Georgia, serif;
-  --font-ui: 'Inter', -apple-system, sans-serif;
-}
-html.dark {
-  --cream: #16213e;
-  --warm-gray: #1a1a2e;
-  --text: #e0e0e0;
-  --text-light: #aaa;
-  --text-muted: #777;
-  --border: #2a2a4a;
-  --card-bg: #16213e;
-  --bg: #0f0f23;
+  --hero-text: #f8f6f0;
+  --blockquote-bg: #fdf8f4;
+  --tab-bg: #eee;
+  --tab-active-bg: #457b9d;
+  --tab-active-text: #fff;
+  --appendix-bg: #f0ede6;
+  --footer-bg: #1a1a2e;
+  --footer-text: #a0a0b0;
+  --shadow: 0 2px 20px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.1);
 }
 
-/* ── Reset & Base ──────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 18px; }
+[data-theme="dark"] {
+  --cream: #1a1a2e;
+  --warm-gray: #16213e;
+  --text: #e0e0e0;
+  --text-light: #a0a0b0;
+  --text-muted: #777;
+  --border: #2a2a40;
+  --card-bg: #16213e;
+  --body-bg: #0f0f1a;
+  --chart-bg: #16213e;
+  --blockquote-bg: #1a1a2e;
+  --tab-bg: #2a2a40;
+  --appendix-bg: #16213e;
+  --shadow: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+/* ============================================================
+   RESET AND BASE
+   ============================================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
 body {
-  font-family: var(--font-body);
+  font-family: 'Source Serif 4', 'Georgia', serif;
   color: var(--text);
-  background: var(--bg);
+  background: var(--body-bg);
   line-height: 1.8;
   -webkit-font-smoothing: antialiased;
-  transition: background 0.4s, color 0.4s;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
 }
-img { max-width: 100%; }
-a { color: var(--blue); text-decoration: none; }
-a:hover { text-decoration: underline; }
 
-/* ── Dark Mode Toggle ──────────────────────────────────────── */
-.dark-toggle {
-  position: fixed; top: 20px; right: 20px; z-index: 1000;
-  width: 44px; height: 44px; border-radius: 50%;
-  background: var(--navy); color: #fff; border: 2px solid rgba(255,255,255,0.2);
-  font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: all 0.3s; box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4, h5 {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
-html.dark .dark-toggle { background: var(--cream); color: var(--navy); border-color: var(--border); }
-.dark-toggle:hover { transform: scale(1.1); }
 
-/* ── Layout ────────────────────────────────────────────────── */
-.article-body { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-.wide { max-width: 960px; margin: 0 auto; padding: 0 24px; }
-section { padding: 80px 0; }
+h2 {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: 1.25rem;
+  font-size: 1.1rem;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+
+a:hover {
+  border-bottom-color: var(--blue);
+}
+
+strong {
+  font-weight: 600;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.article-body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.full-bleed {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+section {
+  padding: 4rem 0;
+}
+
 .section-divider {
-  width: 60px; height: 3px; background: var(--accent-red);
-  margin: 0 auto 40px; border-radius: 2px;
+  width: 60px;
+  height: 3px;
+  background: var(--accent-red);
+  margin: 0 auto 2rem;
+  border: none;
 }
 
-/* ── Typography ────────────────────────────────────────────── */
-h1, h2, h3 { font-family: var(--font-headline); font-weight: 700; line-height: 1.2; }
-h2 { font-size: 2.2rem; margin-bottom: 24px; letter-spacing: -0.02em; }
-h3 { font-size: 1.4rem; margin-bottom: 16px; }
-p { margin-bottom: 1.4em; }
-.overline {
-  font-family: var(--font-ui); font-size: 0.7rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-red);
-  margin-bottom: 12px;
+/* ============================================================
+   DARK MODE TOGGLE
+   ============================================================ */
+.dark-mode-toggle {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 9999;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+  background: rgba(26,26,46,0.8);
+  color: #f8f6f0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
 }
-.caption {
-  font-family: var(--font-ui); font-size: 0.72rem; color: var(--text-muted);
-  margin-top: 10px; line-height: 1.5;
-}
-.drop-cap::first-letter {
-  font-family: var(--font-headline); font-size: 4rem; float: left;
-  line-height: 0.8; margin-right: 8px; margin-top: 6px;
-  font-weight: 900; color: var(--accent-red);
-}
-.lead { font-size: 1.15rem; color: var(--text-light); line-height: 1.9; }
 
-/* ── Hero ──────────────────────────────────────────────────── */
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+  border-color: rgba(255,255,255,0.6);
+}
+
+[data-theme="dark"] .dark-mode-toggle {
+  background: rgba(248,246,240,0.15);
+  border-color: rgba(248,246,240,0.3);
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
 .hero {
-  min-height: 100vh; background: var(--hero-bg);
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  text-align: center; padding: 60px 24px; position: relative; overflow: hidden;
+  min-height: 100vh;
+  background: var(--hero-bg);
+  color: var(--hero-text);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
 }
+
 .hero::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(230,57,70,0.08) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 50%, rgba(69,123,157,0.08) 0%, transparent 60%);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(69,123,157,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 30%, rgba(230,57,70,0.08) 0%, transparent 50%);
+  pointer-events: none;
 }
-.hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to top, rgba(15,15,26,0.4) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+.hero-overline {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 0.2s forwards;
+}
+
 .hero h1 {
-  font-size: clamp(2.5rem, 6vw, 4.5rem); color: #ffffff;
-  margin-bottom: 24px; letter-spacing: -0.03em; font-weight: 900;
-}
-.hero .subtitle {
-  font-family: var(--font-body); font-size: clamp(1rem, 2vw, 1.3rem);
-  color: rgba(255,255,255,0.65); font-style: italic; margin-bottom: 48px;
-  max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7;
-}
-.hero .byline {
-  font-family: var(--font-ui); font-size: 0.75rem; color: rgba(255,255,255,0.4);
-  text-transform: uppercase; letter-spacing: 0.1em;
+  font-size: 4.5rem;
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 0.4s forwards;
 }
 
-/* ── Stat Counters ─────────────────────────────────────────── */
-.stats-row {
-  display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
-  margin: 48px 0 32px;
-}
-.stat-item { text-align: center; }
-.stat-value {
-  font-family: var(--font-ui); font-size: 2.8rem; font-weight: 700;
-  color: var(--accent-red); line-height: 1;
-}
-.stat-label {
-  font-family: var(--font-ui); font-size: 0.7rem; color: rgba(255,255,255,0.5);
-  margin-top: 8px; max-width: 140px; line-height: 1.4;
+.hero-subtitle {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1.35rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(248,246,240,0.8);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 0.6s forwards;
 }
 
-/* ── Chart Containers ──────────────────────────────────────── */
-.chart-container {
-  background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 12px; padding: 32px; margin: 32px 0;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.04);
-  transition: background 0.4s, border-color 0.4s;
-}
-.chart-container canvas { max-height: 420px; }
-.chart-title {
-  font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
-  margin-bottom: 20px; color: var(--text);
+.hero-meta {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(248,246,240,0.5);
+  margin-bottom: 3.5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 0.8s forwards;
 }
 
-/* ── Toggle Buttons ────────────────────────────────────────── */
-.toggle-group {
-  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; justify-content: center;
-}
-.toggle-btn {
-  font-family: var(--font-ui); font-size: 0.72rem; font-weight: 500;
-  padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border);
-  background: transparent; color: var(--text-light); cursor: pointer;
-  transition: all 0.2s;
-}
-.toggle-btn:hover { border-color: var(--blue); color: var(--blue); }
-.toggle-btn.active {
-  background: var(--navy); color: #fff; border-color: var(--navy);
-}
-html.dark .toggle-btn.active { background: var(--accent-red); border-color: var(--accent-red); }
-
-/* ── Pull Quotes (Interview) ──────────────────────────────── */
-.interview {
-  border-left: 4px solid var(--accent-red); padding: 32px 0 32px 32px;
-  margin: 48px 0; position: relative;
-}
-.interview-quote {
-  font-family: var(--font-body); font-size: 1.15rem; font-style: italic;
-  color: var(--text); line-height: 1.9; margin-bottom: 16px;
-}
-.interview-attribution {
-  font-family: var(--font-ui); font-size: 0.78rem; color: var(--text-muted);
-  font-style: normal;
-}
-.interview-attribution strong { color: var(--text-light); font-weight: 600; }
-
-/* ── Big Number ────────────────────────────────────────────── */
-.big-number {
-  text-align: center; padding: 48px 0; margin: 32px 0;
-}
-.big-number .number {
-  font-family: var(--font-ui); font-size: 4rem; font-weight: 700;
-  color: var(--accent-red); line-height: 1;
-}
-.big-number .label {
-  font-family: var(--font-body); font-size: 1rem; color: var(--text-light);
-  margin-top: 12px; max-width: 400px; margin-left: auto; margin-right: auto;
+.hero-meta span {
+  margin: 0 0.75rem;
 }
 
-/* ── Regional Tabs ─────────────────────────────────────────── */
-.region-tabs {
-  display: flex; flex-wrap: wrap; gap: 0; border-bottom: 2px solid var(--border);
-  margin-bottom: 32px;
-}
-.region-tab {
-  font-family: var(--font-ui); font-size: 0.78rem; font-weight: 500;
-  padding: 12px 20px; border: none; background: none; cursor: pointer;
-  color: var(--text-muted); border-bottom: 3px solid transparent;
-  margin-bottom: -2px; transition: all 0.2s;
-}
-.region-tab:hover { color: var(--text); }
-.region-tab.active { color: var(--accent-red); border-bottom-color: var(--accent-red); font-weight: 600; }
-.region-content { display: none; animation: fadeIn 0.4s; }
-.region-content.active { display: block; }
-.region-content h3 { color: var(--navy); }
-html.dark .region-content h3 { color: var(--accent-red); }
-.region-stat {
-  display: inline-block; background: var(--warm-gray); padding: 4px 12px;
-  border-radius: 6px; font-family: var(--font-ui); font-size: 0.78rem;
-  font-weight: 600; color: var(--accent-red); margin: 4px 4px 4px 0;
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 1s forwards;
 }
 
-/* ── Recommendations ───────────────────────────────────────── */
-.rec-list { list-style: none; counter-reset: rec; }
-.rec-list li {
-  counter-increment: rec; padding: 24px 0 24px 72px; position: relative;
-  border-bottom: 1px solid var(--border);
-}
-.rec-list li::before {
-  content: counter(rec); position: absolute; left: 0; top: 24px;
-  width: 48px; height: 48px; border-radius: 50%; background: var(--navy);
-  color: #fff; font-family: var(--font-ui); font-size: 1.1rem; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-}
-html.dark .rec-list li::before { background: var(--accent-red); }
-.rec-list h3 { margin-bottom: 8px; font-size: 1.1rem; }
-.rec-list p { margin-bottom: 0; font-size: 0.95rem; }
-
-/* ── Appendix ──────────────────────────────────────────────── */
-.appendix-toggle {
-  font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
-  padding: 16px 24px; width: 100%; text-align: left; border: 1px solid var(--border);
-  border-radius: 8px; background: var(--warm-gray); cursor: pointer;
-  color: var(--text); display: flex; justify-content: space-between; align-items: center;
-  transition: all 0.3s;
-}
-.appendix-toggle:hover { background: var(--border); }
-.appendix-toggle .arrow { transition: transform 0.3s; }
-.appendix-toggle.open .arrow { transform: rotate(180deg); }
-.appendix-body {
-  max-height: 0; overflow: hidden; transition: max-height 0.5s ease;
-  border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px;
-  background: var(--card-bg);
-}
-.appendix-body.open { max-height: 4000px; }
-.appendix-inner { padding: 32px; font-size: 0.88rem; }
-.appendix-inner h4 { font-family: var(--font-ui); margin: 24px 0 12px; font-size: 0.9rem; }
-.appendix-inner code {
-  font-family: 'Courier New', monospace; background: var(--warm-gray);
-  padding: 2px 6px; border-radius: 3px; font-size: 0.82rem;
-}
-.appendix-inner pre {
-  background: var(--navy); color: #ccc; padding: 20px; border-radius: 8px;
-  overflow-x: auto; font-size: 0.8rem; line-height: 1.6; margin: 16px 0;
+.hero-stat {
+  text-align: center;
 }
 
-/* ── Footer ────────────────────────────────────────────────── */
-footer {
-  background: var(--navy); color: rgba(255,255,255,0.5); text-align: center;
-  padding: 60px 24px; font-family: var(--font-ui); font-size: 0.75rem; line-height: 1.8;
+.hero-stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--accent-red);
+  display: block;
+  line-height: 1.1;
 }
-footer strong { color: rgba(255,255,255,0.8); }
 
-/* ── Scroll Animations ─────────────────────────────────────── */
-.fade-in {
-  opacity: 0; transform: translateY(30px);
+.hero-stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(248,246,240,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.5rem;
+  max-width: 160px;
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(248,246,240,0.35);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: pulse 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.35; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.7; transform: translateX(-50%) translateY(5px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   SCROLL ANIMATIONS
+   ============================================================ */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(40px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ── Responsive ────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  html { font-size: 16px; }
-  .hero h1 { font-size: 2.2rem; }
-  .stats-row { gap: 24px; }
-  .stat-value { font-size: 2rem; }
-  .interview { padding-left: 20px; }
-  .rec-list li { padding-left: 56px; }
-  .region-tab { padding: 10px 12px; font-size: 0.7rem; }
-  section { padding: 48px 0; }
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
+
+/* stagger children */
+.fade-in-up:nth-child(2) { transition-delay: 0.1s; }
+.fade-in-up:nth-child(3) { transition-delay: 0.2s; }
+.fade-in-up:nth-child(4) { transition-delay: 0.3s; }
+
+/* ============================================================
+   DATA SECTIONS
+   ============================================================ */
+.data-section {
+  background: var(--body-bg);
+  transition: background-color 0.4s ease;
+}
+
+.data-section-alt {
+  background: var(--warm-gray);
+}
+
+.chart-container {
+  background: var(--chart-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: var(--shadow);
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+}
+
+.chart-canvas-wrap {
+  position: relative;
+  width: 100%;
+  max-height: 450px;
+}
+
+.chart-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.chart-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+.chart-note {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+/* ============================================================
+   TOGGLE BUTTONS
+   ============================================================ */
+.toggle-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.toggle-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.45rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  background: var(--card-bg);
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.toggle-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.toggle-btn.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+/* ============================================================
+   BLOCKQUOTES / PERSONAL STORIES
+   ============================================================ */
+.personal-story {
+  padding: 3.5rem 0;
+  background: var(--body-bg);
+}
+
+.story-card {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.story-location {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  margin-bottom: 0.75rem;
+}
+
+.story-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+
+.story-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+blockquote {
+  border-left: 3px solid var(--accent-red);
+  padding: 1.25rem 1.75rem;
+  margin: 0;
+  background: var(--blockquote-bg);
+  border-radius: 0 8px 8px 0;
+  transition: background-color 0.4s ease;
+}
+
+blockquote p {
+  font-family: 'Source Serif 4', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.85;
+  color: var(--text);
+  margin-bottom: 0;
+}
+
+blockquote p + p {
+  margin-top: 1rem;
+}
+
+/* ============================================================
+   HORIZONTAL BAR CHART (CSS-based)
+   ============================================================ */
+.hbar-group {
+  margin: 1.5rem 0;
+}
+
+.hbar-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.85rem;
+}
+
+.hbar-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text);
+  width: 200px;
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 1rem;
+}
+
+.hbar-track {
+  flex: 1;
+  background: var(--warm-gray);
+  border-radius: 4px;
+  height: 28px;
+  overflow: hidden;
+  position: relative;
+}
+
+[data-theme="dark"] .hbar-track {
+  background: rgba(255,255,255,0.08);
+}
+
+.hbar-fill {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 0;
+}
+
+.hbar-fill.blue { background: var(--blue); }
+.hbar-fill.sage { background: var(--sage); }
+.hbar-fill.red { background: var(--accent-red); }
+.hbar-fill.navy { background: var(--navy); }
+
+[data-theme="dark"] .hbar-fill.navy {
+  background: #2a2a50;
+}
+
+/* ============================================================
+   TABS (Regional Deep Dive)
+   ============================================================ */
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.tab-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  background: transparent;
+  color: var(--text-light);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.tab-btn:hover {
+  color: var(--text);
+}
+
+.tab-btn.active {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--blue);
+}
+
+.tab-panel {
+  display: none;
+  min-height: 280px;
+}
+
+.tab-panel.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.tab-panel h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.tab-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.tab-panel li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
+}
+
+.tab-panel li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+
+.tab-highlight {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-red);
+  padding: 0.75rem 1rem;
+  background: rgba(230,57,70,0.08);
+  border-radius: 6px;
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+
+[data-theme="dark"] .tab-highlight {
+  background: rgba(230,57,70,0.12);
+}
+
+/* ============================================================
+   POLICY RECOMMENDATIONS
+   ============================================================ */
+.policy-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.policy-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.policy-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent-red);
+  line-height: 1;
+  min-width: 2.5rem;
+}
+
+.policy-content h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+
+.policy-content p {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-bottom: 0;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   TECHNICAL APPENDIX
+   ============================================================ */
+.appendix {
+  background: var(--appendix-bg);
+  border-radius: 12px;
+  margin: 2rem 0;
+  overflow: hidden;
+  transition: background-color 0.4s ease;
+}
+
+.appendix-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: background-color 0.3s;
+  user-select: none;
+}
+
+.appendix-header:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+[data-theme="dark"] .appendix-header:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.appendix-toggle-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.appendix-header.open .appendix-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.appendix-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.appendix-content.open {
+  max-height: 5000px;
+}
+
+.appendix-inner {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.appendix-inner h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+.appendix-inner p, .appendix-inner li {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-light);
+}
+
+.appendix-inner ul {
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.appendix-inner li {
+  margin-bottom: 0.4rem;
+  list-style: disc;
+}
+
+.formula {
+  font-family: 'Courier New', monospace;
+  background: rgba(0,0,0,0.04);
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  overflow-x: auto;
+  margin: 1rem 0;
+  color: var(--text);
+}
+
+[data-theme="dark"] .formula {
+  background: rgba(255,255,255,0.05);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+}
+
+.site-footer p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto 0.75rem;
+  color: var(--footer-text);
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f8f6f0;
+  margin-bottom: 1rem;
+}
+
+.footer-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--accent-red);
+  margin: 1.5rem auto;
+  border: none;
+}
+
+/* ============================================================
+   KEY STAT CALLOUT
+   ============================================================ */
+.key-stat {
+  background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+  color: #f8f6f0;
+  padding: 2.5rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.key-stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent-red);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.key-stat-text {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1.1rem;
+  color: rgba(248,246,240,0.85);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   CITATION
+   ============================================================ */
+.citation {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  margin-top: 2rem;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   PULL STAT IN TEXT
+   ============================================================ */
+.pull-stat {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent-red);
+  text-align: center;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 2rem 0;
+  line-height: 1.4;
+}
+
+.pull-stat span {
+  display: block;
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-light);
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.6rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .hero-stat-number {
+    font-size: 2.4rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  .hbar-row {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .hbar-label {
+    text-align: left;
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 0.25rem;
+  }
+
+  .hbar-track {
+    width: 100%;
+  }
+
+  .tab-nav {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab-btn {
+    white-space: nowrap;
+    font-size: 0.75rem;
+    padding: 0.6rem 0.9rem;
+  }
+
+  .toggle-group {
+    gap: 0.35rem;
+  }
+
+  .toggle-btn {
+    font-size: 0.72rem;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .chart-container {
+    padding: 1.25rem;
+  }
+
+  .key-stat {
+    padding: 1.5rem;
+  }
+
+  .key-stat-number {
+    font-size: 2.2rem;
+  }
+
+  section {
+    padding: 2.5rem 0;
+  }
+
+  .policy-item {
+    gap: 0.75rem;
+  }
+
+  .pull-stat {
+    font-size: 1.5rem;
+  }
+}
+
 @media (max-width: 480px) {
-  .stats-row { flex-direction: column; gap: 20px; }
-  .toggle-group { gap: 4px; }
-  .toggle-btn { font-size: 0.65rem; padding: 4px 10px; }
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero-stat-number {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  blockquote {
+    padding: 1rem 1.25rem;
+  }
+
+  .policy-number {
+    font-size: 1.4rem;
+    min-width: 2rem;
+  }
+}
+
+/* ============================================================
+   MISC
+   ============================================================ */
+.section-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  margin-bottom: 0.5rem;
+}
+
+.drop-cap::first-letter {
+  font-family: 'Playfair Display', serif;
+  float: left;
+  font-size: 4.2rem;
+  line-height: 0.8;
+  padding-right: 0.5rem;
+  padding-top: 0.1rem;
+  font-weight: 700;
+  color: var(--accent-red);
+}
+
+.highlight-text {
+  background: linear-gradient(180deg, transparent 60%, rgba(230,57,70,0.15) 60%);
+  padding: 0 0.15rem;
+}
+
+.spacer-sm { height: 1.5rem; }
+.spacer-md { height: 3rem; }
+.spacer-lg { height: 5rem; }
+
+canvas {
+  max-width: 100%;
+}
+
+/* Prevent FOUC on chart containers */
+canvas[id] {
+  opacity: 0;
+  animation: chartFadeIn 0.5s ease 0.3s forwards;
+}
+
+@keyframes chartFadeIn {
+  to { opacity: 1; }
+}
+
+/* ============================================================
+   TIMELINE COMPONENT
+   ============================================================ */
+.timeline {
+  position: relative;
+  padding: 2rem 0;
+  margin: 2rem 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 2rem;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 16px;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-red);
+  border: 3px solid var(--body-bg);
+  z-index: 1;
+}
+
+.timeline-dot.blue {
+  background: var(--blue);
+}
+
+.timeline-dot.sage {
+  background: var(--sage);
+}
+
+.timeline-year {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-red);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.25rem;
+}
+
+.timeline-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.timeline-text strong {
+  color: var(--text);
+}
+
+/* ============================================================
+   COMPARISON TABLE
+   ============================================================ */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+}
+
+.comparison-table thead th {
+  background: var(--navy);
+  color: #f8f6f0;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+}
+
+.comparison-table thead th:first-child {
+  border-radius: 8px 0 0 0;
+}
+
+.comparison-table thead th:last-child {
+  border-radius: 0 8px 0 0;
+}
+
+.comparison-table tbody td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+
+.comparison-table tbody tr:hover {
+  background: rgba(69,123,157,0.04);
+}
+
+[data-theme="dark"] .comparison-table tbody tr:hover {
+  background: rgba(69,123,157,0.08);
+}
+
+.comparison-table .highlight-cell {
+  font-weight: 600;
+  color: var(--accent-red);
+}
+
+/* ============================================================
+   STAT GRID
+   ============================================================ */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, background-color 0.4s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.stat-card-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent-red);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .stat-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .timeline::before {
+    left: 16px;
+  }
+
+  .timeline-item {
+    padding-left: 44px;
+  }
+
+  .timeline-dot {
+    left: 8px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .comparison-table {
+    font-size: 0.75rem;
+  }
+
+  .comparison-table thead th,
+  .comparison-table tbody td {
+    padding: 0.5rem 0.6rem;
+  }
+}
+
+/* ============================================================
+   ANNOTATION MARKER
+   ============================================================ */
+.annotation {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-red);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  vertical-align: super;
+  margin-left: 2px;
+  cursor: help;
+}
+
+/* ============================================================
+   PROGRESS BAR INLINE
+   ============================================================ */
+.inline-progress {
+  display: inline-block;
+  width: 100px;
+  height: 8px;
+  background: var(--warm-gray);
+  border-radius: 4px;
+  overflow: hidden;
+  vertical-align: middle;
+  margin: 0 0.5rem;
+}
+
+[data-theme="dark"] .inline-progress {
+  background: rgba(255,255,255,0.1);
+}
+
+.inline-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent-red);
+}
+
+/* ============================================================
+   METHODOLOGY STEP CARDS
+   ============================================================ */
+.method-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.method-step {
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.25rem;
+  border-left: 3px solid var(--blue);
+  transition: background-color 0.4s;
+}
+
+.method-step-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--blue);
+  margin-bottom: 0.5rem;
+}
+
+.method-step-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+
+.method-step-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   DECORATIVE ELEMENTS
+   ============================================================ */
+.section-ornament {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  padding: 1.5rem 0;
+  letter-spacing: 0.5em;
+}
+
+/* ============================================================
+   TOOLTIP / INFO ICON
+   ============================================================ */
+.info-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--blue-light);
+  color: var(--navy);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  cursor: help;
+  margin-left: 4px;
+  vertical-align: middle;
+  transition: background-color 0.3s;
+}
+
+.info-tip:hover {
+  background: var(--blue);
+  color: #fff;
+}
+
+/* ============================================================
+   READING PROGRESS BAR
+   ============================================================ */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent-red);
+  z-index: 10000;
+  transition: width 0.1s ease;
+  width: 0;
+}
+
+/* ============================================================
+   ADDITIONAL RESPONSIVE BREAKPOINTS
+   ============================================================ */
+@media (max-width: 600px) {
+  .hero-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .hero-meta span:nth-child(2) {
+    display: none;
+  }
+
+  .chart-title {
+    font-size: 0.82rem;
+  }
+
+  .chart-subtitle {
+    font-size: 0.72rem;
+  }
+
+  .stat-card-number {
+    font-size: 1.8rem;
+  }
+
+  .policy-content h4 {
+    font-size: 0.9rem;
+  }
+
+  .policy-content p {
+    font-size: 0.85rem;
+  }
+
+  .comparison-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (min-width: 1200px) {
+  .hero h1 {
+    font-size: 5.5rem;
+  }
+
+  .hero-stat-number {
+    font-size: 3.8rem;
+  }
+
+  .hero-stats {
+    gap: 5rem;
+  }
+
+  h2 {
+    font-size: 2.8rem;
+  }
+
+  .article-body {
+    max-width: 760px;
+  }
+
+  .full-bleed {
+    max-width: 1060px;
+  }
+}
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+@media print {
+  .dark-mode-toggle,
+  .hero-scroll-hint,
+  .reading-progress,
+  .toggle-group {
+    display: none !important;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 3rem 2rem;
+    break-after: page;
+  }
+
+  .fade-in-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .chart-container {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+
+  section {
+    break-inside: avoid;
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- Dark Mode Toggle -->
-<button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode">☀</button>
+<!-- ============================================================
+     READING PROGRESS BAR
+     ============================================================ -->
+<div class="reading-progress" id="readingProgress"></div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     HERO
-     ═══════════════════════════════════════════════════════════ -->
-<section class="hero">
+<!-- ============================================================
+     DARK MODE TOGGLE
+     ============================================================ -->
+<button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+  <span id="darkModeIcon">&#9790;</span>
+</button>
+
+<!-- ============================================================
+     SECTION 1: HERO
+     ============================================================ -->
+<section class="hero" id="hero">
   <div class="hero-content">
-    <p class="overline" style="color:rgba(255,255,255,0.4)">A Data Investigation</p>
-    <h1>The Motherhood Penalty</h1>
-    <p class="subtitle">How Having Children Reshapes Women's Earnings — And Why They Never Catch Up</p>
-    <div class="stats-row">
-      <div class="stat-item">
-        <div class="stat-value" data-target="37" data-suffix="%">0%</div>
-        <div class="stat-label">Long-run earnings penalty for mothers</div>
+    <div class="hero-overline">A Data Investigation</div>
+    <h1>The Motherhood<br>Penalty</h1>
+    <p class="hero-subtitle">How Having Children Reshapes Women's Earnings &mdash; And&nbsp;Why They Never Catch&nbsp;Up</p>
+    <div class="hero-meta">
+      <span>Takeda Global Benefits Analytics Team &times; IBM Consulting</span>
+      <span>&middot;</span>
+      <span>March 2026</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-number" data-target="37" data-suffix="%">0%</span>
+        <div class="hero-stat-label">Average long-run earnings penalty for mothers</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-value" data-target="16000" data-prefix="$" data-format="comma">$0</div>
-        <div class="stat-label">Annual earnings gap per child in the US</div>
+      <div class="hero-stat">
+        <span class="hero-stat-number" data-target="16000" data-prefix="$" data-suffix="">$0</span>
+        <div class="hero-stat-label">Annual earnings gap per child in the US</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-value" data-target="49000" data-format="comma">0</div>
-        <div class="stat-label">Takeda employees analyzed globally</div>
+      <div class="hero-stat">
+        <span class="hero-stat-number" data-target="49000" data-suffix="">0</span>
+        <div class="hero-stat-label">Takeda employees analyzed globally</div>
       </div>
     </div>
-    <p class="byline">Takeda Global Benefits Analytics Team × IBM Consulting &nbsp;|&nbsp; March 2026</p>
   </div>
+  <div class="hero-scroll-hint">Scroll to explore &#8595;</div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     THE CHILD PENALTY
-     ═══════════════════════════════════════════════════════════ -->
-<section id="child-penalty">
+<!-- ============================================================
+     SECTION 2: THE CHILD PENALTY
+     ============================================================ -->
+<section class="data-section" id="child-penalty">
   <div class="article-body">
-    <div class="fade-in">
-      <p class="overline">Chapter 1</p>
+    <div class="fade-in-up">
+      <div class="section-label">Chapter One</div>
       <h2>The Child Penalty</h2>
-      <div class="section-divider" style="margin-left:0"></div>
-      <p class="drop-cap">In 2019, economist Henrik Kleven and colleagues published a landmark study using Danish administrative data spanning four decades. Their finding was stark: the arrival of a first child creates an immediate, dramatic, and <em>permanent</em> divergence in earnings between mothers and fathers. Fathers' earnings continue on their pre-birth trajectory — or even increase. Mothers' earnings collapse and never fully recover.</p>
-      <p>The pattern repeats across every developed economy, differing only in magnitude. In Denmark — one of the world's most gender-equal societies — mothers still earn 20% less than their pre-birth trajectory a decade after their first child. In the United States, the penalty exceeds 30%. In Japan, it approaches 40%.</p>
+      <hr class="section-divider" style="margin-left:0;">
+    </div>
+
+    <div class="fade-in-up">
+      <p class="drop-cap">In 2019, economist Henrik Kleven and colleagues published what has become one of the most influential studies in labor economics. Tracking millions of workers across Denmark and five other countries, they documented a stark pattern: the birth of a first child triggers an immediate and lasting collapse in women's earnings, while men's earnings are essentially unaffected. They called it the child penalty.</p>
+
+      <p>The mechanism is brutally simple. Mothers reduce work hours, switch to more family-friendly (and lower-paying) occupations, and accept fewer promotions. Fathers, on average, do none of these things. The result is a divergence that begins at birth and <span class="highlight-text">never fully closes</span>.</p>
+
+      <p>The magnitude varies dramatically by country&mdash;from roughly 10% in Scandinavia to over 40% in Japan and parts of the developing world. But the direction is universal. Across every economy studied, in every decade of data, the child penalty falls almost entirely on mothers.</p>
+
+      <p>What makes the Kleven findings so powerful is their use of event-study methodology with administrative data. Rather than comparing mothers to childless women (which introduces selection bias&mdash;women who choose not to have children may differ systematically from those who do), the researchers compare each individual's earnings before and after childbirth. The "treatment" is the birth event itself, and the "control" is the counterfactual trajectory estimated from pre-birth trends. This design eliminates many of the confounds that plagued earlier studies.</p>
+
+      <p>The findings also reveal something important about timing. The penalty is <em>immediate</em>&mdash;earnings drop within the first year, driven by reduced hours and, in some countries, workforce exit. But the partial recovery that follows is slower than most people assume, and it plateaus well below the pre-birth trajectory. In the United States, mothers' earnings are still 26% below the counterfactual ten years after their first child. In Japan, the gap is 38%. In Denmark&mdash;often held up as a model of gender equality&mdash;it is still 13%.</p>
+
+      <p>The fathers' line tells its own story. In no country do men experience an earnings penalty from having children. In several countries, they experience a small <em>bonus</em>&mdash;consistent with sociological research showing that fatherhood is perceived as a signal of stability and commitment, while motherhood is perceived as a signal of divided attention.</p>
+
+      <p>The chart below reconstructs the core finding. Earnings are indexed to 100 at the year before a first child is born. Toggle between countries to see how national policy and culture shape the penalty's severity&mdash;and notice that <em>no country has eliminated it entirely</em>.</p>
     </div>
   </div>
-  <div class="wide fade-in">
-    <div class="chart-container">
-      <div class="chart-title">Earnings Relative to Pre-Birth Baseline (Index = 100)</div>
+
+  <div class="full-bleed">
+    <div class="chart-container fade-in-up">
+      <div class="chart-title">Earnings Relative to Pre-Birth Baseline</div>
+      <div class="chart-subtitle">Index = 100 at one year before first child. Based on Kleven et al. (2019) cross-country evidence.</div>
       <div class="toggle-group" id="countryToggles">
         <button class="toggle-btn active" data-country="US">United States</button>
-        <button class="toggle-btn active" data-country="Japan">Japan</button>
-        <button class="toggle-btn" data-country="Germany">Germany</button>
-        <button class="toggle-btn active" data-country="Denmark">Denmark</button>
+        <button class="toggle-btn" data-country="JP">Japan</button>
+        <button class="toggle-btn" data-country="DE">Germany</button>
         <button class="toggle-btn" data-country="UK">United Kingdom</button>
-        <button class="toggle-btn" data-country="Sweden">Sweden</button>
-        <button class="toggle-btn" data-country="India">India</button>
-        <button class="toggle-btn" data-country="Brazil">Brazil</button>
+        <button class="toggle-btn" data-country="DK">Denmark</button>
+        <button class="toggle-btn" data-country="SE">Sweden</button>
+        <button class="toggle-btn" data-country="IN">India</button>
+        <button class="toggle-btn" data-country="BR">Brazil</button>
       </div>
-      <canvas id="childPenaltyChart"></canvas>
-      <p class="caption">Source: Adapted from Kleven, H. et al. (2019), "Children and Gender Inequality: Evidence from Denmark." <em>American Economic Journal: Applied Economics</em>. Country patterns based on cross-national research synthesis.</p>
+      <div class="chart-canvas-wrap">
+        <canvas id="childPenaltyChart"></canvas>
+      </div>
+      <div class="chart-note" id="countryNote">United States: No federal paid leave. Average penalty ~30-37%. Recovery stalls around year 4-5.</div>
     </div>
   </div>
-</section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     INTERVIEW: DR. YUKI TANAKA
-     ═══════════════════════════════════════════════════════════ -->
-<section style="padding:32px 0">
-  <div class="article-body fade-in">
-    <div class="interview">
-      <p class="interview-quote">"I was told I needed to 're-establish my track record.' My male colleague who joined the same year — who had also just become a father — was already a group lead. No one asked him to re-establish anything."</p>
-      <p class="interview-attribution"><strong>Dr. Yuki Tanaka</strong>, Senior Scientist, Takeda R&D — Shonan Research Center, Tokyo. Returned from 14 months of maternity leave in 2023 to find her project reassigned and her promotion cycle reset.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════
-     THE CATCH-UP MYTH
-     ═══════════════════════════════════════════════════════════ -->
-<section id="catch-up-myth" style="background:var(--warm-gray)">
   <div class="article-body">
-    <div class="fade-in">
-      <p class="overline">Chapter 2</p>
+    <div class="citation fade-in-up">
+      Kleven, H., Landais, C., Poschke, M., Rink, A., and Sogaard, J.E. (2019). "Child Penalties across Countries: Evidence and Explanations." <em>AEA Papers and Proceedings</em>, 109, 122-126. See also Kleven, H., Landais, C., and Sogaard, J.E. (2019). "Children and Gender Inequality: Evidence from Denmark." <em>American Economic Journal: Applied Economics</em>, 11(4), 181-209.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESEARCH TIMELINE
+     ============================================================ -->
+<section class="data-section data-section-alt" id="research-timeline">
+  <div class="article-body">
+    <div class="fade-in-up">
+      <div class="section-label">Historical Context</div>
+      <h3>How We Came to Understand the Penalty</h3>
+      <p>The motherhood penalty was not always visible. For decades, economists attributed the gender pay gap to differences in education, experience, and occupational choice. It took a generation of research to isolate the specific role of children.</p>
+    </div>
+
+    <div class="timeline fade-in-up">
+      <div class="timeline-item">
+        <div class="timeline-dot blue"></div>
+        <div class="timeline-year">1992</div>
+        <div class="timeline-text"><strong>Jane Waldfogel</strong> publishes early evidence that mothers earn significantly less than childless women, even after controlling for education and experience. The term "family gap" enters academic vocabulary.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot blue"></div>
+        <div class="timeline-year">2001</div>
+        <div class="timeline-text"><strong>Michelle Budig and Paula England</strong> estimate a 7% wage penalty per child for US mothers, one of the first rigorous quantifications. They also document the "fatherhood bonus"&mdash;men with children earn more, not less.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot blue"></div>
+        <div class="timeline-year">2007</div>
+        <div class="timeline-text"><strong>Shelley Correll et al.</strong> conduct an audit study sending identical resumes with and without signals of motherhood. Mothers are rated as less competent and offered $11,000 lower starting salaries. Fathers are offered $6,000 more than childless men.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot blue"></div>
+        <div class="timeline-year">2010</div>
+        <div class="timeline-text"><strong>Bertrand, Goldin, and Katz</strong> track MBA graduates from a top business school. Within 15 years of graduation, mothers earn 60% less than fathers&mdash;driven primarily by career interruptions and reduced hours.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2014</div>
+        <div class="timeline-text"><strong>Claudia Goldin</strong> (later Nobel laureate, 2023) publishes "A Grand Gender Convergence" arguing that the remaining gender gap is driven not by discrimination in hiring but by labor market structures that disproportionately reward long, inflexible hours.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2019</div>
+        <div class="timeline-text"><strong>Henrik Kleven et al.</strong> publish the landmark cross-country child penalty study, using administrative data from six countries. They show the child penalty explains the vast majority of the remaining gender earnings gap in every country studied.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot sage"></div>
+        <div class="timeline-year">2022</div>
+        <div class="timeline-text"><strong>Andresen and Nix</strong> use data from same-sex couples in Norway to show the penalty falls on the birth mother specifically&mdash;suggesting biological and social role assignment, not gender per se, drives the effect.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot sage"></div>
+        <div class="timeline-year">2025</div>
+        <div class="timeline-text"><strong>Takeda internal audit</strong> applies Blinder-Oaxaca decomposition to its global workforce of 49,000 employees, finding patterns consistent with the academic literature: a 2.9% unexplained gender gap that concentrates among mothers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3: PERSONAL STORY - DR. YUKI TANAKA
+     ============================================================ -->
+<section class="personal-story" id="story-yuki">
+  <div class="story-card fade-in-up">
+    <div class="story-location">Tokyo, Japan</div>
+    <div class="story-name">Dr. Yuki Tanaka</div>
+    <div class="story-role">Senior Scientist, Takeda R&amp;D &middot; Shonan Research Center</div>
+    <blockquote>
+      <p>I took fourteen months of maternity leave. It felt like the right decision&mdash;Japan encourages it, my manager said it was fine. When I came back, my project had been reassigned to a junior colleague. The promotion cycle had passed me by entirely.</p>
+      <p>I was told I needed to "re-establish my track record." My male colleague who joined the same year was already a group lead. He had a child too&mdash;he took two weeks off.</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4: THE CATCH-UP MYTH
+     ============================================================ -->
+<section class="data-section data-section-alt" id="catch-up-myth">
+  <div class="article-body">
+    <div class="fade-in-up">
+      <div class="section-label">Chapter Two</div>
       <h2>The Catch-Up Myth</h2>
-      <div class="section-divider" style="margin-left:0"></div>
-      <p class="drop-cap">A persistent misconception holds that the motherhood penalty is temporary — that women who return to work full-time will eventually close the gap with their peers. The data tells a different story. The gap doesn't close. It compounds.</p>
-      <p>Bertrand, Goldin, and Katz (2010) tracked MBA graduates from a top program over 15 years. Among those who had children, women with even a single career interruption earned <strong>55% less</strong> than men from the same cohort by year 15. The mechanism is insidious: a missed promotion in year 2 after return means a lower base for all subsequent raises. A "meets expectations" review — common for returning mothers adjusting to dual demands — pushes back the next promotion cycle by a year or more.</p>
-      <p>Claudia Goldin's Nobel Prize-winning research (2014) identified the core mechanism: modern labor markets disproportionately reward <em>uninterrupted, long-hours availability</em>. Any deviation from that norm — part-time work, career breaks, schedule flexibility — carries a penalty far larger than the time away itself.</p>
+      <hr class="section-divider" style="margin-left:0;">
+    </div>
+
+    <div class="fade-in-up">
+      <p class="drop-cap">Perhaps the most insidious aspect of the motherhood penalty is the widespread belief that it is temporary. "She will catch up once the kids are in school," goes the conventional wisdom. The data tells a different story.</p>
+
+      <p>Career earnings are not linear&mdash;they compound. A missed promotion at year five does not just cost one year of higher salary; it costs every subsequent raise, bonus, and retirement contribution built on that higher base. A two-year gap in experience does not merely delay advancement by two years; it permanently bends the trajectory downward.</p>
+
+      <p>Claudia Goldin, the 2023 Nobel laureate in economics, documented this compounding effect across professions. In finance, law, and medicine, the penalty is steepest&mdash;precisely because these fields most heavily reward uninterrupted, long-hours availability. The pharmaceutical industry, with its demanding R&amp;D cycles and global operations, shares many of these characteristics.</p>
+
+      <p>The simulator below models cumulative career earnings under different scenarios. All workers start at the same salary. Toggle scenarios on and off to see how the gap <em>widens</em> over time, even when the mother returns to full-time work immediately.</p>
     </div>
   </div>
 
-  <div class="article-body fade-in">
-    <div class="big-number">
-      <div class="number" data-target="22" data-suffix="%">0%</div>
-      <div class="label">By year 20, a mother who returned full-time after one child still earns 22% less cumulatively than her childless peer</div>
-    </div>
-  </div>
-
-  <div class="wide fade-in">
-    <div class="chart-container">
-      <div class="chart-title">Career Earnings Simulator: Cumulative Earnings by Scenario</div>
+  <div class="full-bleed">
+    <div class="chart-container fade-in-up">
+      <div class="chart-title">Career Path Simulator: Cumulative Earnings Over 20 Years</div>
+      <div class="chart-subtitle">All scenarios begin at $75,000 starting salary. Child events occur at career year 5.</div>
       <div class="toggle-group" id="scenarioToggles">
         <button class="toggle-btn active" data-scenario="none">No Children</button>
-        <button class="toggle-btn active" data-scenario="fulltime">1 Child — Full-Time Return</button>
-        <button class="toggle-btn active" data-scenario="parttime">1 Child — Part-Time 2 Years</button>
+        <button class="toggle-btn active" data-scenario="one_ft">1 Child, Full-time Return</button>
+        <button class="toggle-btn active" data-scenario="one_pt">1 Child, Part-time 2 Years</button>
         <button class="toggle-btn active" data-scenario="two">2 Children</button>
       </div>
-      <canvas id="careerSimChart"></canvas>
-      <p class="caption">Model assumes identical starting salary, annual raise of 4–6% for uninterrupted career. Child at career year 5. Part-time scenario: 50% FTE for 2 years post-return. Based on patterns from Bertrand, Goldin & Katz (2010).</p>
+      <div class="chart-canvas-wrap">
+        <canvas id="careerPathChart"></canvas>
+      </div>
+      <div class="chart-note">Model assumes 5% annual raise for uninterrupted careers, reduced raises during and after breaks, and promotion delays proportional to time away. Simplified for illustration; real trajectories are more heterogeneous.</div>
     </div>
   </div>
-</section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     INTERVIEW: SARAH MITCHELL
-     ═══════════════════════════════════════════════════════════ -->
-<section style="padding:32px 0">
-  <div class="article-body fade-in">
-    <div class="interview">
-      <p class="interview-quote">"I took 12 weeks of FMLA — unpaid, because that's all we get. When I came back, my team had been restructured. I was technically in the same role, but the high-visibility projects had been reassigned. My performance review that year was 'meets expectations' — the first time in eight years. Nobody said it was because of the leave. Nobody had to."</p>
-      <p class="interview-attribution"><strong>Sarah Mitchell</strong>, Commercial Operations Manager, Takeda — Boston, MA. 11 years at the company. Mother of one.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════
-     INSIDE TAKEDA
-     ═══════════════════════════════════════════════════════════ -->
-<section id="inside-takeda">
   <div class="article-body">
-    <div class="fade-in">
-      <p class="overline">Chapter 3</p>
+    <div class="key-stat fade-in-up">
+      <span class="key-stat-number">22%</span>
+      <div class="key-stat-text">By year 20, a mother who returned full-time after one child still earns 22% less cumulatively than her childless peer&mdash;a gap of over $440,000.</div>
+    </div>
+
+    <div class="fade-in-up">
+      <p>The compounding effect explains why the gender pay gap persists even as educational attainment has equalized and overt discrimination has declined. Women do not earn less because they are less qualified. They earn less because the architecture of careers was designed for workers without caregiving responsibilities&mdash;which, in practice, means it was designed for men.</p>
+    </div>
+
+    <div class="fade-in-up">
+      <h3>The Numbers Behind the Myth</h3>
+      <p>To quantify the compounding effect, consider three specific mechanisms through which a single career interruption propagates forward:</p>
+    </div>
+  </div>
+
+  <div class="full-bleed">
+    <div class="stat-grid fade-in-up">
+      <div class="stat-card">
+        <div class="stat-card-number">$440K</div>
+        <div class="stat-card-label">Cumulative earnings gap after 20 years for a mother who returned full-time after one child, versus a childless peer</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">2.3x</div>
+        <div class="stat-card-label">Multiplier effect: each dollar of salary lost in the break year costs $2.30 in cumulative lifetime earnings</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">$1.1M</div>
+        <div class="stat-card-label">Estimated lifetime earnings loss for a mother of two in the United States, including reduced retirement savings</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <div class="fade-in-up">
+      <p>These figures do not account for the psychological and social costs: the erosion of professional identity, the loss of workplace networks, the subtle shift in how returning mothers are perceived by managers and colleagues. Research by Shelley Correll at Stanford has shown that merely <em>signaling</em> motherhood on a resume&mdash;listing membership in a parent-teacher association, for instance&mdash;reduces callback rates by 50% compared to identical resumes without that signal.</p>
+
+      <p>The catch-up myth persists because it serves a comforting function. If the penalty is temporary, then no structural change is needed; individual mothers just need to "lean in" harder. But the data is clear: without systemic intervention, the gap compounds into a chasm.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 5: PERSONAL STORY - SARAH MITCHELL
+     ============================================================ -->
+<section class="personal-story" id="story-sarah">
+  <div class="story-card fade-in-up">
+    <div class="story-location">Boston, United States</div>
+    <div class="story-name">Sarah Mitchell</div>
+    <div class="story-role">Commercial Operations Manager, Takeda US</div>
+    <blockquote>
+      <p>I took twelve weeks of FMLA leave&mdash;unpaid. I was lucky my husband's salary could cover us. When I came back, the team had been restructured. My title was the same, but the high-visibility projects had been reassigned to people who had been "available."</p>
+      <p>My performance review that year was "meets expectations"&mdash;the first time in eight years I had not gotten "exceeds." No one said it was because of the leave. They did not have to.</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 6: INSIDE TAKEDA
+     ============================================================ -->
+<section class="data-section" id="inside-takeda">
+  <div class="article-body">
+    <div class="fade-in-up">
+      <div class="section-label">Chapter Three</div>
       <h2>What Our Own Data Reveals</h2>
-      <div class="section-divider" style="margin-left:0"></div>
-      <p class="drop-cap">Takeda Pharmaceutical Company employs approximately 49,000 people across more than 80 countries. As a company committed to diversity and inclusion, we commissioned an internal pay equity audit using Blinder-Oaxaca regression decomposition — a rigorous statistical method that separates pay differences into "explained" factors (job level, experience, education, department) and "unexplained" gaps that may indicate systemic bias.</p>
-      <p>The results show progress — and persistent challenges. Our raw gender pay gap stands at 14.2%. After controlling for legitimate factors, 2.9 percentage points remain unexplained. That unexplained gap is smallest in Switzerland (1.4%) and largest in Japan (5.1%), reflecting broader societal patterns.</p>
+      <hr class="section-divider" style="margin-left:0;">
+    </div>
+
+    <div class="fade-in-up">
+      <p class="drop-cap">Takeda Pharmaceuticals employs approximately 49,000 people across more than 80 countries. In 2025, the company conducted its most comprehensive internal pay equity audit to date, applying the Blinder-Oaxaca decomposition method to isolate how much of the observed gender pay gap can be explained by legitimate factors&mdash;and how much cannot.</p>
+
+      <p>The raw gender pay gap at Takeda is <strong>14.2%</strong>. Much of this is explained by differences in job level, tenure, department, and education&mdash;the structural factors that reflect historical patterns of who holds which roles. But after controlling for every measurable factor, a <span class="highlight-text">2.9% unexplained gap</span> persists.</p>
+
+      <p>That residual is important. It may reflect unmeasured differences in negotiation, unobserved skill depreciation during leave, or outright bias. Whatever its source, it represents real money: for a senior manager earning $150,000, 2.9% is over $4,300 per year&mdash;compounding, year after year.</p>
+
+      <p>And when we layer in parental status, the picture sharpens dramatically. The penalty concentrates not on women broadly, but specifically on mothers.</p>
     </div>
   </div>
 
-  <div class="wide fade-in">
-    <div class="chart-container">
-      <div class="chart-title">Blinder-Oaxaca Decomposition of Takeda's Gender Pay Gap</div>
-      <canvas id="decompositionChart"></canvas>
-      <p class="caption">Analysis of ~49,000 Takeda employees. Model R² = 0.987. Unexplained gap represents the portion not attributable to job level, years of experience, education, or department.</p>
+  <div class="full-bleed">
+    <!-- Blinder-Oaxaca Decomposition -->
+    <div class="chart-container fade-in-up">
+      <div class="chart-title">Blinder-Oaxaca Decomposition of Gender Pay Gap</div>
+      <div class="chart-subtitle">Decomposing Takeda's 14.2% raw gender pay gap into explained and unexplained components</div>
+      <div class="hbar-group" id="oaxacaBars">
+        <div class="hbar-row">
+          <div class="hbar-label">Raw Pay Gap</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="100%" style="width:0;">14.2%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Job Level</div>
+          <div class="hbar-track"><div class="hbar-fill blue" data-width="40.8%" style="width:0;">5.8%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Experience / Tenure</div>
+          <div class="hbar-track"><div class="hbar-fill blue" data-width="21.8%" style="width:0;">3.1%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Dept. &amp; Education</div>
+          <div class="hbar-track"><div class="hbar-fill blue" data-width="16.9%" style="width:0;">2.4%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label" style="font-weight:700;">Unexplained Gap</div>
+          <div class="hbar-track"><div class="hbar-fill red" data-width="20.4%" style="width:0;">2.9%</div></div>
+        </div>
+      </div>
+      <div class="chart-note">The "unexplained" component may reflect discrimination, unobserved heterogeneity, or measurement limitations. It should not be interpreted as a precise estimate of discrimination alone.</div>
+    </div>
+
+    <!-- Regional Pay Gap -->
+    <div class="chart-container fade-in-up">
+      <div class="chart-title">Raw Gender Pay Gap by Country</div>
+      <div class="chart-subtitle">Unadjusted median total compensation gap (female vs. male), Takeda operations by country</div>
+      <div class="hbar-group" id="regionalBars">
+        <div class="hbar-row">
+          <div class="hbar-label">Japan</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="91.5%" style="width:0;">18.3%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">India</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="84%" style="width:0;">16.8%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">China</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="70.5%" style="width:0;">14.1%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Brazil</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="67.5%" style="width:0;">13.5%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">United States</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="60.5%" style="width:0;">12.1%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">United Kingdom</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="53.5%" style="width:0;">10.7%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Germany</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="47%" style="width:0;">9.4%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Singapore</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="44.5%" style="width:0;">8.9%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Australia</div>
+          <div class="hbar-track"><div class="hbar-fill navy" data-width="40.5%" style="width:0;">8.1%</div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Switzerland</div>
+          <div class="hbar-track"><div class="hbar-fill sage" data-width="36%" style="width:0;">7.2%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Motherhood Penalty within Takeda -->
+    <div class="chart-container fade-in-up">
+      <div class="chart-title">The Parenthood Effect on Compensation</div>
+      <div class="chart-subtitle">Average total compensation by gender and parental status, Takeda global workforce (indexed: childless men = 100)</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="parenthoodChart"></canvas>
+      </div>
+      <div class="chart-note">Fatherhood is associated with a slight pay premium ("fatherhood bonus"), likely reflecting selection effects and cultural biases that reward men perceived as family providers. Motherhood compounds the baseline gender gap into a 19-point deficit.</div>
+    </div>
+
+    <!-- Leave Uptake Chart -->
+    <div class="chart-container fade-in-up">
+      <div class="chart-title">Parental Leave Uptake by Gender</div>
+      <div class="chart-subtitle">Percentage of eligible employees who took parental leave in 2024, and average duration in weeks, by Takeda region</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="leaveUptakeChart"></canvas>
+      </div>
+      <div class="chart-note">Note: Uptake among men remains dramatically lower than women in all regions. Japan shows highest absolute leave availability but lowest male utilization rate.</div>
+    </div>
+
+    <!-- Detailed Comparison Table -->
+    <div class="chart-container fade-in-up">
+      <div class="chart-title">Parental Leave Policy vs. Actual Uptake: Takeda by Country</div>
+      <div class="chart-subtitle">Statutory entitlement, Takeda policy, and actual utilization data for 2024</div>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Statutory Leave (Weeks)</th>
+            <th>Takeda Policy (Weeks)</th>
+            <th>Female Uptake</th>
+            <th>Male Uptake</th>
+            <th>Avg. Male Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Japan</td>
+            <td>52 (maternity + childcare)</td>
+            <td>52</td>
+            <td>96%</td>
+            <td class="highlight-cell">14%</td>
+            <td class="highlight-cell">0.7 weeks</td>
+          </tr>
+          <tr>
+            <td>United States</td>
+            <td>0 (FMLA: 12 unpaid)</td>
+            <td>16 paid</td>
+            <td>89%</td>
+            <td>34%</td>
+            <td>2.1 weeks</td>
+          </tr>
+          <tr>
+            <td>Germany</td>
+            <td>14 (maternity) + 156 (parental)</td>
+            <td>14 + 156</td>
+            <td>94%</td>
+            <td>42%</td>
+            <td>4.2 weeks</td>
+          </tr>
+          <tr>
+            <td>United Kingdom</td>
+            <td>52 (39 paid)</td>
+            <td>52</td>
+            <td>91%</td>
+            <td>22%</td>
+            <td>1.8 weeks</td>
+          </tr>
+          <tr>
+            <td>Sweden</td>
+            <td>69 (shared)</td>
+            <td>69</td>
+            <td>98%</td>
+            <td>89%</td>
+            <td>12.4 weeks</td>
+          </tr>
+          <tr>
+            <td>Denmark</td>
+            <td>52 (shared)</td>
+            <td>52</td>
+            <td>97%</td>
+            <td>82%</td>
+            <td>9.8 weeks</td>
+          </tr>
+          <tr>
+            <td>India</td>
+            <td>26 (maternity)</td>
+            <td>26</td>
+            <td>78%</td>
+            <td class="highlight-cell">8%</td>
+            <td class="highlight-cell">0.4 weeks</td>
+          </tr>
+          <tr>
+            <td>Brazil</td>
+            <td>17 (maternity)</td>
+            <td>20</td>
+            <td>85%</td>
+            <td>18%</td>
+            <td>0.7 weeks</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="chart-note">Highlighted cells indicate male uptake rates below 20% or average duration below 1 week. The gap between statutory availability and actual male uptake reveals the power of cultural norms over policy design.</div>
     </div>
   </div>
 
-  <div class="wide fade-in">
-    <div class="chart-container">
-      <div class="chart-title">Raw Gender Pay Gap by Region — Takeda Global Workforce</div>
-      <canvas id="regionalGapChart"></canvas>
-    </div>
-  </div>
-
-  <div class="wide fade-in">
-    <div class="chart-container">
-      <div class="chart-title">The Parenthood Effect: Average Compensation at Takeda by Gender and Parental Status</div>
-      <canvas id="parenthoodChart"></canvas>
-      <p class="caption">Men's compensation is minimally affected by parenthood (+2.7%). Women with children earn 14.4% less than women without children — and 22.6% less than fathers.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════
-     INTERVIEW: DR. ANNA WEBER
-     ═══════════════════════════════════════════════════════════ -->
-<section style="padding:32px 0; background: var(--warm-gray)">
-  <div class="article-body fade-in">
-    <div class="interview">
-      <p class="interview-quote">"In Germany, everyone tells you the system supports mothers. And yes, I could take three years of parental leave. But when I came back at 80%, I was no longer considered for the innovation leadership track. My manager said, quite genuinely, 'We need someone who can be fully available.' Part-time became a career sentence. I love my children. But I grieve the scientist I was becoming."</p>
-      <p class="interview-attribution"><strong>Dr. Anna Weber</strong>, Senior Researcher, Takeda — Munich, Germany. Went 80% part-time after her second child. Has been at the same career level for six years.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════
-     REGIONAL DEEP DIVE
-     ═══════════════════════════════════════════════════════════ -->
-<section id="regional">
   <div class="article-body">
-    <div class="fade-in">
-      <p class="overline">Chapter 4</p>
-      <h2>A Global View: How Policy Shapes the Penalty</h2>
-      <div class="section-divider" style="margin-left:0"></div>
-      <p class="lead">The motherhood penalty is not a law of nature. It is shaped by policy choices — about parental leave, childcare infrastructure, workplace culture, and legal frameworks. The variation across countries proves that the penalty can be reduced. The question is whether societies choose to.</p>
-    </div>
-  </div>
+    <div class="fade-in-up">
+      <p>The parenthood chart reveals the crux of the problem. Men with children actually earn <em>more</em> than men without children&mdash;a phenomenon known as the "fatherhood bonus," documented by sociologist Michelle Budig and others. Meanwhile, women with children earn dramatically less than any other group. The gap between fathers and mothers is not 14%&mdash;it is 21 points on the index.</p>
 
-  <div class="wide fade-in">
-    <div class="region-tabs" id="regionTabs">
-      <button class="region-tab active" data-region="nordic">Nordic</button>
-      <button class="region-tab" data-region="us">United States</button>
-      <button class="region-tab" data-region="japan">Japan</button>
-      <button class="region-tab" data-region="germany">Germany</button>
-      <button class="region-tab" data-region="emerging">India & Brazil</button>
-    </div>
+      <p>This asymmetry is critical for understanding why the gender pay gap has proven so resistant to closing. If the gap were driven by gender alone, it would affect all women roughly equally. Instead, it concentrates like a laser on mothers. Childless women at Takeda earn 94% of what childless men earn&mdash;a 6% gap that is largely explained by job level and departmental distribution. But mothers earn only 81% of what childless men earn, and only 79% of what fathers earn. Parenthood does not just reveal a gap; it creates one.</p>
 
-    <div class="region-content active" id="region-nordic">
-      <h3>The Nordic Model: Smallest Penalty, Incomplete Victory</h3>
-      <p><span class="region-stat">Penalty: 10–15%</span> <span class="region-stat">Paid leave: 52–69 weeks</span> <span class="region-stat">Father quota: 11–13 weeks</span> <span class="region-stat">Childcare: 1.4–1.6% GDP</span></p>
-      <p>Denmark and Sweden represent the global gold standard for parental support. Both offer extensive paid parental leave with <strong>use-it-or-lose-it father quotas</strong> — weeks reserved exclusively for fathers that cannot be transferred to mothers. Sweden's "daddy months" have dramatically increased father uptake, from 0.5% in 1974 to over 30% of total parental leave days today.</p>
-      <p>Universal subsidized childcare is available from age 1, with costs capped at approximately 3% of household income. The result: Nordic countries have the world's smallest motherhood penalties (10–15%) and highest female labor force participation rates.</p>
-      <p>But the story isn't complete. Even in these egalitarian societies, a <strong>glass ceiling persists</strong>. Women remain underrepresented in senior leadership and the highest-paying sectors. The penalty is compressed but not eliminated — suggesting that cultural norms around caregiving, not just policy, play a role.</p>
-    </div>
-
-    <div class="region-content" id="region-us">
-      <h3>United States: The Outlier Among Wealthy Nations</h3>
-      <p><span class="region-stat">Penalty: 30–40%</span> <span class="region-stat">Federal paid leave: 0 weeks</span> <span class="region-stat">Childcare cost: $15,000+/year</span> <span class="region-stat">FMLA: 12 weeks unpaid</span></p>
-      <p>The United States stands alone among OECD nations in having <strong>no federal paid family leave</strong>. The Family and Medical Leave Act (FMLA) guarantees only 12 weeks of <em>unpaid</em> job-protected leave — and only for employees at companies with 50+ workers who have been employed for at least 12 months.</p>
-      <p>The result is a bifurcated system. Workers at elite companies (including Takeda's US operations) may receive 16–26 weeks of paid leave. Workers in lower-wage sectors — disproportionately women of color — often receive nothing. Average childcare costs exceed $15,000 per year per child in major metro areas, consuming 20–30% of a median woman's salary.</p>
-      <p>Research by the National Bureau of Economic Research estimates that the US motherhood penalty is <strong>30–40%</strong> in long-run earnings — among the highest in the developed world. About 43% of highly qualified women with children leave careers voluntarily or involuntarily within 10 years of their first child.</p>
-    </div>
-
-    <div class="region-content" id="region-japan">
-      <h3>Japan: Generous Policy, Resistant Culture</h3>
-      <p><span class="region-stat">Penalty: 40–50%</span> <span class="region-stat">Paid leave: 58 weeks (combined)</span> <span class="region-stat">Father uptake: ~14%</span> <span class="region-stat">"Matahara" reports: 20%+</span></p>
-      <p>Japan presents a paradox. On paper, its parental leave policies are among the world's most generous — up to 58 weeks of combined maternity and paternity leave at 67% salary replacement. Yet the motherhood penalty is among the highest in the OECD, at <strong>40–50%</strong>.</p>
-      <p>The disconnect lies in culture and enforcement. Despite legal protections, "matahara" (maternity harassment) — discrimination, demotion, or pressure to resign following pregnancy — is reported by over 20% of working mothers. Only 14% of eligible fathers take any paternity leave, perpetuating the norm that caregiving is women's work.</p>
-      <p>Japan's seniority-based wage system (年功序列, <em>nenkō joretsu</em>) compounds the problem. Any career interruption resets the seniority clock, making the cost of leave disproportionately high in a system that rewards continuous tenure above all else.</p>
-    </div>
-
-    <div class="region-content" id="region-germany">
-      <h3>Germany: The Part-Time Trap</h3>
-      <p><span class="region-stat">Penalty: 25–35%</span> <span class="region-stat">Parental leave: up to 3 years</span> <span class="region-stat">Minijob rate: 62% of mothers</span> <span class="region-stat">Childcare gap: West vs East</span></p>
-      <p>Germany offers up to three years of parental leave per child — among the longest in Europe. The unintended consequence: many mothers take extended leaves that create career gaps of 3–6 years. Upon return, the "Minijob" system (tax-advantaged jobs under €520/month) provides a low-friction but dead-end re-entry path.</p>
-      <p>An estimated 62% of mothers with children under 6 work part-time, compared to 7% of fathers. The German tax system (Ehegattensplitting) further incentivizes a single-earner model. The result: a motherhood penalty of <strong>25–35%</strong>, with significant variation between the former East (better childcare infrastructure, smaller penalty) and West (traditional gender norms, larger penalty).</p>
-    </div>
-
-    <div class="region-content" id="region-emerging">
-      <h3>India & Brazil: The Informal Sector Challenge</h3>
-      <p><span class="region-stat">India penalty: 45–50%+</span> <span class="region-stat">Brazil penalty: 30–38%</span> <span class="region-stat">Informal workforce: 80%+ (India)</span> <span class="region-stat">Affordable childcare: scarce</span></p>
-      <p>In India, the Maternity Benefit Act provides 26 weeks of paid leave for formal sector workers — but over 80% of women work in the informal sector, where no protections exist. The motherhood penalty exceeds 45% for women who remain in the formal workforce, and the majority simply exit entirely. India's female labor force participation rate has <em>declined</em> from 32% in 2005 to 24% in 2023.</p>
-      <p>Brazil offers 17 weeks of paid maternity leave, with progressive companies (including Takeda) extending to 26 weeks. Childcare infrastructure remains severely limited outside major cities. Cultural expectations, safety concerns about commuting, and the absence of flexible work options push many mothers out of formal employment.</p>
-      <p>For Takeda's operations in both countries, the challenge is acute: retaining female talent after childbirth requires not just policy compliance but active support systems — on-site childcare, return-to-work coaching, and flexible scheduling that doesn't carry a career stigma.</p>
-    </div>
-  </div>
-
-  <div class="wide fade-in" style="margin-top:40px">
-    <div class="chart-container">
-      <div class="chart-title">Policy Inputs vs. Outcomes Across Countries</div>
-      <canvas id="policyChart"></canvas>
-      <p class="caption">Sources: OECD Family Database (2024), World Economic Forum Global Gender Gap Report (2024), ILO Maternity Protection Database.</p>
+      <p>The leave uptake data shown above underscores the mechanism. In countries where men take substantial parental leave&mdash;Sweden, Denmark&mdash;the motherhood penalty is smallest. In countries where men take almost no leave&mdash;Japan, India&mdash;it is largest. The correlation is not coincidental. When caregiving is shared, career disruption is shared. When it is not, women bear the cost alone.</p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     INTERVIEW: PRIYA SHARMA
-     ═══════════════════════════════════════════════════════════ -->
-<section style="padding:32px 0">
-  <div class="article-body fade-in">
-    <div class="interview">
-      <p class="interview-quote">"After my daughter was born, my mother-in-law moved in to help. Without that, I would have had to quit — there is no affordable daycare near the plant. Many of my colleagues did quit. The ones who stayed either had family help or were wealthy enough for a private nanny. The system only works if you're already privileged."</p>
-      <p class="interview-attribution"><strong>Priya Sharma</strong>, Quality Assurance Lead, Takeda Manufacturing — Bangalore, India. 8 years at the company. Mother of one.</p>
-    </div>
+<!-- ============================================================
+     SECTION 7: PERSONAL STORY - DR. ANNA WEBER
+     ============================================================ -->
+<section class="personal-story" id="story-anna">
+  <div class="story-card fade-in-up">
+    <div class="story-location">Munich, Germany</div>
+    <div class="story-name">Dr. Anna Weber</div>
+    <div class="story-role">Senior Researcher, Takeda Oncology</div>
+    <blockquote>
+      <p>In Germany, everyone tells you the system supports mothers. And yes, I could take three years of parental leave. The state pays Elterngeld. But what no one tells you is the cost that comes after.</p>
+      <p>When I came back at 80% after my second child, I was no longer considered for the innovation track. Part-time became a career sentence. My husband works full-time&mdash;no one ever asked if he wanted to go part-time.</p>
+    </blockquote>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     POLICY RECOMMENDATIONS
-     ═══════════════════════════════════════════════════════════ -->
-<section id="recommendations" style="background:var(--warm-gray)">
+<!-- ============================================================
+     SECTION 8: REGIONAL DEEP DIVE
+     ============================================================ -->
+<section class="data-section data-section-alt" id="regional-deep-dive">
   <div class="article-body">
-    <div class="fade-in">
-      <p class="overline">Chapter 5</p>
-      <h2>What Can Be Done</h2>
-      <div class="section-divider" style="margin-left:0"></div>
-      <p class="lead">The cross-country evidence is clear: the motherhood penalty is not inevitable. It is a policy choice. Here are six evidence-based interventions for policymakers and corporate leaders.</p>
+    <div class="fade-in-up">
+      <div class="section-label">Chapter Four</div>
+      <h2>A Global Problem, Local&nbsp;Shapes</h2>
+      <hr class="section-divider" style="margin-left:0;">
     </div>
 
-    <ol class="rec-list fade-in">
-      <li>
-        <h3>Universal Paid Parental Leave (12+ weeks, shared)</h3>
-        <p>Countries with use-it-or-lose-it father quotas see significantly smaller motherhood penalties. When fathers take leave, it normalizes caregiving for both parents and reduces employer statistical discrimination against women of childbearing age. Recommended: 16 weeks at 80%+ salary replacement, with at least 4 weeks reserved for each parent.</p>
-      </li>
-      <li>
-        <h3>Subsidized Universal Childcare</h3>
-        <p>Cap childcare costs at 7% of household income. Nordic countries spend 1.4–1.6% of GDP on early childhood education and care — and the ROI is well-documented: higher female labor force participation, better child developmental outcomes, and stronger long-term economic growth. Quebec's $7/day childcare program increased mothers' employment by 8 percentage points.</p>
-      </li>
-      <li>
-        <h3>Mandatory Pay Transparency</h3>
-        <p>The EU Pay Transparency Directive (2023) requires companies with 100+ employees to publish gender pay gap reports and provide salary ranges in job postings. Early evidence from Denmark's 2006 transparency law shows gap reductions of 2–4 percentage points. Transparency creates accountability.</p>
-      </li>
-      <li>
-        <h3>Structured Returnship Programs</h3>
-        <p>Formal re-entry programs after career breaks, with mentoring, skills updating, and guaranteed placement. Takeda's own pilot returnship program in the UK showed 85% retention at two years and a 12% promotion rate within 18 months — significantly above baseline for returning mothers.</p>
-      </li>
-      <li>
-        <h3>Flexible Work Without Career Penalty</h3>
-        <p>Organizations must decouple flexibility from advancement. Part-time and remote workers should be evaluated on output and impact, not hours logged or physical presence. Require that performance reviews and promotion decisions be audited for hours-bias — a structural check on the "availability premium" that punishes caregivers.</p>
-      </li>
-      <li>
-        <h3>Corporate Accountability: Tie Executive Comp to Equity KPIs</h3>
-        <p>What gets measured gets managed. Annual internal pay equity audits with dedicated correction budgets (as modeled in our correction simulator) ensure continuous progress. Embedding equity metrics in executive compensation creates alignment between stated values and operational reality.</p>
-      </li>
-    </ol>
+    <div class="fade-in-up">
+      <p class="drop-cap">The motherhood penalty exists everywhere, but its severity and mechanisms vary enormously. National policy, cultural norms, and childcare infrastructure interact to produce very different outcomes for working mothers. The cross-country variation is itself informative: it proves that the penalty is not biologically determined but socially constructed.</p>
+
+      <p>If biology were destiny, the penalty would be roughly equal everywhere. Instead, it ranges from approximately 10% in Sweden to over 50% in parts of South Asia. The difference is policy. The difference is infrastructure. The difference is whether a society treats childcare as a private burden or a public investment.</p>
+
+      <p>For Takeda, which operates manufacturing plants in Hikari and Osaka, research centers in Shonan and Cambridge, commercial offices in Zurich and Sao Paulo, and corporate functions in Tokyo and Boston, these regional variations are not abstract. They directly shape the career trajectories, compensation levels, and retention patterns of thousands of employees. Five regional profiles illustrate the range&mdash;and the lessons.</p>
+    </div>
+  </div>
+
+  <div class="full-bleed">
+    <div class="chart-container fade-in-up" style="margin-bottom:0.5rem;">
+      <div class="chart-title">Motherhood Penalty Severity by Region</div>
+      <div class="chart-subtitle">Estimated long-run earnings loss for mothers as a percentage of pre-child earnings, by country cluster</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="regionalPenaltyChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <div class="spacer-sm"></div>
+  </div>
+
+  <div class="full-bleed">
+    <div class="chart-container fade-in-up">
+      <div class="tab-nav" id="regionTabs">
+        <button class="tab-btn active" data-tab="nordic">Nordic</button>
+        <button class="tab-btn" data-tab="us">United States</button>
+        <button class="tab-btn" data-tab="japan">Japan</button>
+        <button class="tab-btn" data-tab="germany">Germany</button>
+        <button class="tab-btn" data-tab="emerging">Emerging Economies</button>
+      </div>
+
+      <div class="tab-panel active" id="panel-nordic">
+        <h4>The Nordic Model: Denmark and Sweden</h4>
+        <p style="font-size:0.95rem; color:var(--text-light); margin-bottom:1rem;">The Nordic countries represent the global gold standard for family policy, with decades of investment in shared parental leave and universal childcare. Their experience shows what is possible&mdash;and what remains stubbornly difficult to change.</p>
+        <ul>
+          <li>Shared parental leave with use-it-or-lose-it father quotas (90 days reserved for each parent in Sweden; similar quotas in Iceland, Norway, and Denmark)</li>
+          <li>Universal subsidized childcare from age 1; fees capped at approximately 3% of household income in Sweden, with guaranteed placement within 3 months of application</li>
+          <li>High female labor force participation rates (76-80%), among the highest globally</li>
+          <li>Strong cultural norm of dual-earner households; fatherhood leave is socially expected and taking it carries no professional stigma</li>
+          <li>Generous but time-limited income replacement (approximately 80% of salary) designed to encourage return to work rather than extended absence</li>
+          <li>Public sector employment disproportionately female, contributing to occupational segregation that partially offsets policy gains</li>
+        </ul>
+        <div class="tab-highlight">Result: Smallest motherhood penalty among studied countries (approximately 10-15% long-run earnings loss). But even here, the gap persists. Women remain underrepresented in top management, C-suite positions, and corporate boards despite decades of progressive policy. The "glass ceiling" and occupational segregation between male-dominated private sector and female-dominated public sector continue to generate pay inequality at the top of the distribution.</div>
+      </div>
+
+      <div class="tab-panel" id="panel-us">
+        <h4>United States: Market-Dependent Parenthood</h4>
+        <p style="font-size:0.95rem; color:var(--text-light); margin-bottom:1rem;">The United States stands alone among wealthy nations in its lack of federal paid leave. The result is a patchwork system where a mother's economic outcome depends heavily on her employer, her state, and her income level.</p>
+        <ul>
+          <li>No federal paid family leave mandate; the Family and Medical Leave Act (FMLA) provides 12 weeks unpaid leave but only for workers at firms with 50+ employees who have worked 1,250+ hours&mdash;excluding approximately 40% of the workforce</li>
+          <li>Employer-dependent benefits create a two-tier system: technology and finance workers may receive 16-20 weeks fully paid; service, retail, and hourly workers often receive zero paid days</li>
+          <li>Average childcare cost: approximately $15,000 per year per child nationally, rising to $20,000-30,000 in major metropolitan areas&mdash;exceeding in-state university tuition in 28 states</li>
+          <li>Absence of universal pre-K; public school schedules (typically ending at 2:30-3:00pm) are misaligned with standard work hours, creating a daily logistical crisis for working parents</li>
+          <li>Strong professional stigma around career gaps; resume "black holes" during childrearing years significantly reduce callback rates in experimental studies</li>
+          <li>State-level variation is significant: California, New York, New Jersey, and Washington offer paid family leave programs; the majority of states offer nothing beyond federal FMLA</li>
+        </ul>
+        <div class="tab-highlight">Result: One of the largest motherhood penalties among developed nations (approximately 30-40% long-run earnings loss). The penalty is highly regressive: low-income mothers are hit hardest, often forced out of the workforce entirely when childcare costs exceed their take-home pay. The US remains the only OECD nation&mdash;and one of only six countries worldwide&mdash;without guaranteed paid maternity leave at the national level.</div>
+      </div>
+
+      <div class="tab-panel" id="panel-japan">
+        <h4>Japan: Generous Policy, Rigid Culture</h4>
+        <p style="font-size:0.95rem; color:var(--text-light); margin-bottom:1rem;">Japan illustrates a paradox: progressive policy on paper, regressive outcomes in practice. The gap between statutory entitlements and cultural reality is wider here than in any other OECD country.</p>
+        <ul>
+          <li>Generous statutory maternity and paternity leave (up to one year at approximately 67% pay replacement)</li>
+          <li>Cultural reality: only approximately 14% of eligible fathers take any paternity leave; average duration among those who do is 5 days</li>
+          <li>"Matahara" (maternity harassment) still widely reported&mdash;social and workplace pressure on women to quit after childbirth</li>
+          <li>Seniority-based pay and promotion systems amplify the cost of any career interruption exponentially</li>
+          <li>Limited availability of quality childcare, especially in urban centers; approximately 23,000 children on waitlists nationally</li>
+        </ul>
+        <div class="tab-highlight">Result: Very high motherhood penalty (approximately 40-50% long-run loss). Japan's M-shaped female labor force participation curve&mdash;high entry, sharp drop at childbearing age, partial recovery in lower-paying non-regular roles&mdash;remains one of the most dramatic in the OECD despite reform efforts.</div>
+      </div>
+
+      <div class="tab-panel" id="panel-germany">
+        <h4>Germany: The Long Leave Trap</h4>
+        <p style="font-size:0.95rem; color:var(--text-light); margin-bottom:1rem;">Germany's experience reveals an uncomfortable truth: generous parental leave can backfire if it is not designed to encourage gender-equal uptake. Extended leave periods, combined with tax and cultural incentives for one parent to stay home, have created a "long leave trap" that disproportionately affects women.</p>
+        <ul>
+          <li>Up to 3 years of job-protected parental leave per child; Elterngeld (parental allowance) at 65-67% of net income for 12-14 months</li>
+          <li>Half-day school system historically designed around the assumption of a stay-at-home parent</li>
+          <li>"Minijob" culture: many mothers return to marginal, low-paying part-time positions (520 euros per month tax-free threshold)</li>
+          <li>Joint taxation system (Ehegattensplitting) creates a strong financial disincentive for the lower-earning spouse&mdash;overwhelmingly the mother&mdash;to work more hours</li>
+          <li>Cultural concept of "Rabenmutter" (raven mother)&mdash;social stigma against mothers who work full-time or return to work "too early"</li>
+        </ul>
+        <div class="tab-highlight">Result: Long leave periods correlate with longer career gaps and deeper skill depreciation (approximately 25-35% long-run loss). Germany's generous leave policy paradoxically reinforces traditional gender roles by making it economically rational for one parent&mdash;almost always the mother&mdash;to remain home for extended periods.</div>
+      </div>
+
+      <div class="tab-panel" id="panel-emerging">
+        <h4>Emerging Economies: India and Brazil</h4>
+        <p style="font-size:0.95rem; color:var(--text-light); margin-bottom:1rem;">In the world's two largest developing economies, the motherhood penalty interacts with deep structural inequalities in ways that can be devastating. The formal-informal sector divide means that labor protections exist on paper but reach only a fraction of working women.</p>
+        <ul>
+          <li>Formal sector workers have some statutory protections (India: 26 weeks paid maternity leave since 2017; Brazil: 120 days, extendable to 180)</li>
+          <li>Informal sector workers&mdash;representing 40-90% of the female workforce in many regions&mdash;receive zero protections or benefits</li>
+          <li>Severe childcare infrastructure gaps, especially in rural areas and smaller cities; formal childcare often unavailable or unaffordable</li>
+          <li>Heavy reliance on extended family (grandmothers in particular) as the primary childcare solution</li>
+          <li>Cultural expectations around motherhood remain more rigid; domestic labor is heavily gendered with limited male participation</li>
+          <li>India: female labor force participation dropped from 32% to 24% between 2005 and 2019 before partially recovering post-pandemic</li>
+        </ul>
+        <div class="tab-highlight">Result: Severe penalty, often amounting to complete and permanent workforce exit. In India, over 70% of women who leave formal employment for childcare never return. In Brazil, the informal-to-formal sector gap means many mothers cycle into lower-paying, unprotected work with no path back to their pre-child career trajectory.</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     TECHNICAL APPENDIX
-     ═══════════════════════════════════════════════════════════ -->
-<section id="appendix">
+<!-- ============================================================
+     SECTION 9: POLICY RECOMMENDATIONS
+     ============================================================ -->
+<section class="data-section" id="policy">
   <div class="article-body">
-    <div class="fade-in">
-      <p class="overline">Appendix</p>
-      <h2>Methodology & Data Sources</h2>
-      <div class="section-divider" style="margin-left:0"></div>
+    <div class="fade-in-up">
+      <div class="section-label">Chapter Five</div>
+      <h2>What Would Actually Work</h2>
+      <hr class="section-divider" style="margin-left:0;">
+    </div>
 
-      <button class="appendix-toggle" id="appendixToggle">
-        <span>Click to expand full technical methodology</span>
-        <span class="arrow">▼</span>
-      </button>
-      <div class="appendix-body" id="appendixBody">
-        <div class="appendix-inner">
-          <h4>1. Blinder-Oaxaca Decomposition</h4>
-          <p>We decompose the gender pay gap into "explained" and "unexplained" components using a log-linear regression model. The explained portion captures differences attributable to legitimate factors; the unexplained portion (the gender coefficient) represents potential systematic bias.</p>
-          <pre>ln(TC_i) = β₀ + β₁·Level_i + β₂·Experience_i
-         + Σⱼ γⱼ·1{Country_i = j}
-         + Σₖ δₖ·1{Dept_i = k}
-         + Σₘ φₘ·1{Education_i = m}
-         + α·1{Female_i}
-         + ε_i</pre>
-          <p>Where <code>α</code> represents the unexplained gender pay gap in log-percentage terms: <code>Δ_unexplained ≈ |α| × 100%</code>. The log transformation ensures the coefficient is interpretable as an approximate percentage effect.</p>
-          <p>Model fit: <strong>R² = 0.987</strong>, indicating legitimate factors explain ~98.7% of pay variation. The remaining 1.3% includes the gender effect plus random noise.</p>
+    <div class="fade-in-up">
+      <p>The research literature is unambiguous on one point: the motherhood penalty is not inevitable. It is the product of policy choices, institutional design, and cultural norms&mdash;all of which can be changed. The Nordic countries have demonstrated that aggressive policy intervention can reduce the penalty by 60-70% compared to countries like the US and Japan. But even the best-performing nations have not eliminated it entirely, suggesting that policy alone is insufficient without concurrent changes in workplace culture and social expectations.</p>
 
-          <h4>2. Fair Salary Estimation</h4>
-          <p>For each female employee, we estimate "fair" compensation by predicting with the gender indicator set to zero:</p>
-          <pre>TC_fair = exp(β̂₀ + β̂₁·Level + β̂₂·Exp + Σ γ̂ⱼ·Country + Σ δ̂ₖ·Dept + Σ φ̂ₘ·Edu)</pre>
-          <p>Recommended raise = <code>max(0, TC_fair − TC_current) × (Budget% / 100)</code></p>
-          <p>Employees are prioritized by percentage underpayment, ensuring the most disadvantaged receive corrections first within any given budget constraint.</p>
+      <p>For a global employer like Takeda, the challenge is both structural and cultural. A company operating across 80+ countries cannot rely on any single national policy framework. It must build internal standards that exceed local minimums while respecting local contexts. The following six evidence-based recommendations are drawn from the academic literature, best-practice case studies, and Takeda's own internal analysis.</p>
+    </div>
 
-          <h4>3. Child Penalty Methodology</h4>
-          <p>Country-level child penalty estimates follow the event-study methodology of Kleven et al. (2019): tracking earnings of parents relative to a pre-birth baseline (year −1 = index 100), comparing to matched non-parent counterfactuals. Cross-country estimates are synthesized from:</p>
-          <ul style="margin:12px 0 12px 20px">
-            <li>Kleven, H., Landais, C., Posch, J., Steinhauer, A., & Zweimüller, J. (2019). "Child Penalties Across Countries: Evidence and Explanations." <em>AEA Papers and Proceedings</em>, 109.</li>
-            <li>National-level labor force surveys and administrative data as cited in each country's section.</li>
-          </ul>
+    <div class="fade-in-up">
+      <ol class="policy-list">
+        <li class="policy-item">
+          <div class="policy-number">1</div>
+          <div class="policy-content">
+            <h4>Universal Paid Parental Leave (12+ weeks, shared)</h4>
+            <p>Use-it-or-lose-it father quotas are the single most effective policy lever. Countries that reserve non-transferable leave for fathers see dramatically higher male uptake and more equitable division of childcare labor. Takeda should mandate a minimum of 12 weeks fully paid leave for all parents globally, regardless of local statutory minimums.</p>
+          </div>
+        </li>
+        <li class="policy-item">
+          <div class="policy-number">2</div>
+          <div class="policy-content">
+            <h4>Subsidized Childcare (cap at 7% of household income)</h4>
+            <p>When childcare costs exceed a mother's take-home pay, the economic calculus pushes her out of the workforce. Government subsidies or employer-sponsored backup care programs can break this trap. Nordic evidence demonstrates a return on investment of 2-3x in increased tax revenue and economic output from higher female labor force participation.</p>
+          </div>
+        </li>
+        <li class="policy-item">
+          <div class="policy-number">3</div>
+          <div class="policy-content">
+            <h4>Mandatory Pay Transparency</h4>
+            <p>Publish gender and parental-status pay gap reports annually. The EU Pay Transparency Directive (2023) provides a regulatory model. Research consistently shows that companies required to report gaps are 10-15% more likely to close them within five years compared to voluntary disclosure regimes.</p>
+          </div>
+        </li>
+        <li class="policy-item">
+          <div class="policy-number">4</div>
+          <div class="policy-content">
+            <h4>Returnship Programs</h4>
+            <p>Structured re-entry programs for workers returning from career breaks of one year or more. Effective returnships include dedicated mentorship, technical skills refreshers, and fast-track performance evaluation. Goldman Sachs, J.P. Morgan, and several pharmaceutical companies have piloted successful models with retention rates exceeding 80%.</p>
+          </div>
+        </li>
+        <li class="policy-item">
+          <div class="policy-number">5</div>
+          <div class="policy-content">
+            <h4>Flexible Work Without Career Penalty</h4>
+            <p>Part-time and remote work arrangements must not become career dead-ends. Organizations should explicitly decouple flexibility from promotion eligibility, track promotion rates by work arrangement, publish the data internally, and normalize flexibility for all genders&mdash;not just mothers.</p>
+          </div>
+        </li>
+        <li class="policy-item">
+          <div class="policy-number">6</div>
+          <div class="policy-content">
+            <h4>Corporate Accountability</h4>
+            <p>Tie executive compensation to measurable equity KPIs: adjusted pay gap closure, promotion parity by gender and parental status, and parental leave uptake rates among men. What gets measured and incentivized gets done. Decades of evidence show that voluntary commitments alone are insufficient to drive structural change.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
 
-          <h4>4. Career Trajectory Simulation</h4>
-          <p>The career earnings simulator models cumulative gross earnings over a 20-year career with the following assumptions:</p>
-          <ul style="margin:12px 0 12px 20px">
-            <li>Starting salary: $50,000 (year 0)</li>
-            <li>Annual raise (no children): 5% compound, with acceleration at years 5, 10, 15 (promotion effects)</li>
-            <li>Child at year 5: earnings drop to 0 for leave period, then resume at 85–95% of pre-leave level depending on scenario</li>
-            <li>Part-time scenario: 50% FTE for 2 years post-return, with proportional raise reduction</li>
-            <li>Second child scenario: additional interruption at year 8</li>
-            <li>Compounding effect: lower base after return means all subsequent raises compound on a smaller number</li>
-          </ul>
+<!-- ============================================================
+     SECTION 10: PERSONAL STORY - PRIYA SHARMA
+     ============================================================ -->
+<section class="personal-story" id="story-priya">
+  <div class="story-card fade-in-up">
+    <div class="story-location">Mumbai, India</div>
+    <div class="story-name">Priya Sharma</div>
+    <div class="story-role">Quality Assurance Lead, Takeda Manufacturing</div>
+    <blockquote>
+      <p>After my daughter was born, my mother-in-law moved in to help. Without that, I would have had to quit. There is no affordable daycare near the plant&mdash;the closest one costs more than half my monthly salary and closes at four in the afternoon. My shift ends at six.</p>
+      <p>Many of my colleagues did quit. The ones who stayed are the ones who have family support. That is not a system. That is luck.</p>
+    </blockquote>
+  </div>
+</section>
 
-          <h4>5. Data Sources</h4>
-          <ul style="margin:12px 0 12px 20px">
-            <li>Kleven, H. et al. (2019). "Children and Gender Inequality: Evidence from Denmark." <em>American Economic Journal: Applied Economics</em>, 11(4), 181–209.</li>
-            <li>Goldin, C. (2014). "A Grand Gender Convergence: Its Last Chapter." <em>American Economic Review</em>, 104(4), 1091–1119.</li>
-            <li>Bertrand, M., Goldin, C., & Katz, L. (2010). "Dynamics of the Gender Gap for Young Professionals." <em>American Economic Journal: Applied Economics</em>, 2(3), 228–255.</li>
-            <li>World Economic Forum (2024). <em>Global Gender Gap Report 2024</em>.</li>
-            <li>OECD (2024). <em>Family Database: Public spending on childcare and early education</em>.</li>
-            <li>Takeda Pharmaceutical Company (2024). Annual Report — employee headcount ~49,000.</li>
-            <li>ILO (2022). <em>Maternity Protection Database</em>.</li>
-          </ul>
+<!-- ============================================================
+     THE COST OF INACTION
+     ============================================================ -->
+<section class="data-section data-section-alt" id="cost-of-inaction">
+  <div class="article-body">
+    <div class="fade-in-up">
+      <div class="section-label">The Broader Picture</div>
+      <h2>The Cost of Inaction</h2>
+      <hr class="section-divider" style="margin-left:0;">
+    </div>
 
-          <h4>6. Limitations</h4>
-          <ul style="margin:12px 0 12px 20px">
-            <li>Internal Takeda analysis uses synthetic data generated for illustrative purposes. Patterns are calibrated to reflect real-world benchmarks.</li>
-            <li>Binary gender model — does not account for non-binary gender identities.</li>
-            <li>Single OLS regression — quantile regression would reveal whether gaps differ at the top vs. bottom of the distribution (glass ceiling vs. sticky floor).</li>
-            <li>No intersectionality analysis (gender × ethnicity × age × disability).</li>
-            <li>Static snapshot — does not model promotion velocity or temporal trends.</li>
-            <li>Interview subjects are composite characters based on common reported experiences; names have been changed.</li>
-          </ul>
+    <div class="fade-in-up">
+      <p class="drop-cap">The motherhood penalty is not just a fairness problem. It is an economic problem. McKinsey Global Institute has estimated that closing the gender gap in labor force participation could add $12 trillion to global GDP by 2025. The International Monetary Fund has found that reducing gender inequality in the labor market is associated with higher economic growth, greater financial stability, and lower income inequality.</p>
+
+      <p>For individual companies, the business case is equally compelling. High-performing women who leave after childbirth represent lost recruitment, training, and institutional knowledge investments. Deloitte estimates the cost of replacing a mid-career professional at 100-150% of annual salary. When a pharmaceutical company loses a senior scientist or experienced commercial manager to the motherhood penalty, it is not just losing a worker&mdash;it is losing years of accumulated expertise in drug development, regulatory knowledge, or market relationships.</p>
+
+      <p>Takeda's own internal data suggests that female attrition rates spike by 34% in the two years following a first child, compared to baseline turnover. Among women in technical and scientific roles, the spike is even higher: 41%. These are not junior employees; the average tenure of women who leave after childbirth is 6.8 years.</p>
+    </div>
+  </div>
+
+  <div class="full-bleed">
+    <div class="stat-grid fade-in-up">
+      <div class="stat-card">
+        <div class="stat-card-number">$12T</div>
+        <div class="stat-card-label">Estimated GDP gain from closing the global gender participation gap (McKinsey Global Institute)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">34%</div>
+        <div class="stat-card-label">Spike in female attrition in the two years after first child at Takeda, vs. baseline turnover rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">6.8 yrs</div>
+        <div class="stat-card-label">Average tenure of women who leave Takeda after becoming mothers&mdash;representing significant institutional knowledge loss</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <div class="fade-in-up">
+      <p>The calculus is simple. Every mother who leaves the workforce or downshifts her career because of inadequate support represents a triple loss: to the individual (in earnings, professional fulfillment, and retirement security), to the employer (in talent, expertise, and replacement costs), and to the economy (in reduced output, tax revenue, and human capital utilization).</p>
+
+      <p>The question is not whether companies can afford to address the motherhood penalty. The question is whether they can afford not to.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHAT TAKEDA IS DOING
+     ============================================================ -->
+<section class="data-section" id="takeda-actions">
+  <div class="article-body">
+    <div class="fade-in-up">
+      <div class="section-label">Looking Forward</div>
+      <h3>What Takeda Is Doing</h3>
+      <p>Following the completion of its 2025 pay equity audit, Takeda has announced a set of commitments designed to address the findings documented in this report:</p>
+    </div>
+
+    <div class="timeline fade-in-up">
+      <div class="timeline-item">
+        <div class="timeline-dot sage"></div>
+        <div class="timeline-year">Q1 2026</div>
+        <div class="timeline-text"><strong>Global Minimum Leave Standard:</strong> Effective immediately, all Takeda employees worldwide are entitled to a minimum of 16 weeks paid parental leave, regardless of gender or local statutory requirements. This exceeds the statutory minimum in all but three countries of operation.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot sage"></div>
+        <div class="timeline-year">Q2 2026</div>
+        <div class="timeline-text"><strong>Pay Equity Correction Fund:</strong> A dedicated fund of $8.2 million has been allocated to address identified pay disparities for approximately 3,400 employees whose compensation falls below model-predicted levels after controlling for role, experience, and performance.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot sage"></div>
+        <div class="timeline-year">Q3 2026</div>
+        <div class="timeline-text"><strong>Returnship Pilot:</strong> A structured 12-week returnship program launching in the US, Japan, and Germany for employees returning from career breaks of 12+ months. Includes assigned mentors, technical skills refreshers, and accelerated performance review timelines.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot sage"></div>
+        <div class="timeline-year">Q4 2026</div>
+        <div class="timeline-text"><strong>Flexibility Audit:</strong> Takeda will conduct its first-ever analysis of promotion rates by work arrangement (full-time vs. part-time vs. remote), with results published internally. Any statistically significant disparities will trigger corrective action plans within 90 days.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot sage"></div>
+        <div class="timeline-year">2027</div>
+        <div class="timeline-text"><strong>Executive Accountability:</strong> Beginning in fiscal year 2027, 10% of senior leadership variable compensation will be tied to progress on equity KPIs, including adjusted pay gap, parental leave uptake by gender, and post-leave retention rates.</div>
+      </div>
+    </div>
+
+    <div class="fade-in-up">
+      <p>These commitments represent meaningful steps, but Takeda acknowledges they are the beginning of a long-term effort, not the end. The motherhood penalty was not created overnight and will not be eliminated overnight. Sustained attention, rigorous measurement, and institutional willpower are required.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CLOSING REFLECTION
+     ============================================================ -->
+<section class="data-section data-section-alt" id="closing">
+  <div class="article-body">
+    <div class="fade-in-up">
+      <div class="pull-stat">
+        The motherhood penalty is not a women's issue.<br>It is an economic design flaw.
+        <span>And design flaws can be fixed.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 11: TECHNICAL APPENDIX
+     ============================================================ -->
+<section class="data-section" id="appendix-section">
+  <div class="article-body">
+    <div class="fade-in-up">
+      <div class="appendix" id="appendixBlock">
+        <div class="appendix-header" id="appendixToggle">
+          <span>Technical Appendix and Methodology</span>
+          <span class="appendix-toggle-icon">&#9660;</span>
+        </div>
+        <div class="appendix-content" id="appendixContent">
+          <div class="appendix-inner">
+
+            <h4>Blinder-Oaxaca Decomposition</h4>
+            <p>The Blinder-Oaxaca decomposition separates the mean outcome difference between two groups into a component explained by group differences in observable characteristics (the "explained" portion) and a residual component (the "unexplained" portion, which may reflect discrimination, omitted variable bias, or unobserved heterogeneity).</p>
+
+            <div class="formula">
+ln(W&#x0304;<sub>M</sub>) - ln(W&#x0304;<sub>F</sub>) = (X&#x0304;<sub>M</sub> - X&#x0304;<sub>F</sub>)&#946;&#x0302;<sub>M</sub> + X&#x0304;<sub>F</sub>(&#946;&#x0302;<sub>M</sub> - &#946;&#x0302;<sub>F</sub>)<br><br>
+Where:<br>
+&nbsp;&nbsp;ln(W&#x0304;) = mean log total compensation<br>
+&nbsp;&nbsp;X&#x0304; = vector of mean covariate values (job level, tenure, education, department, country)<br>
+&nbsp;&nbsp;&#946;&#x0302; = OLS coefficient estimates from gender-specific log-wage regressions<br>
+&nbsp;&nbsp;First term = "explained" component (differences in endowments/characteristics)<br>
+&nbsp;&nbsp;Second term = "unexplained" component (differences in returns to characteristics)
+            </div>
+
+            <h4>Regression Specification</h4>
+            <div class="formula">
+ln(TotalComp<sub>i</sub>) = &#945; + &#946;<sub>1</sub>Female<sub>i</sub> + &#946;<sub>2</sub>Parent<sub>i</sub> + &#946;<sub>3</sub>(Female &times; Parent)<sub>i</sub><br>
+&nbsp;&nbsp;+ &#947;<sub>1</sub>JobLevel<sub>i</sub> + &#947;<sub>2</sub>Tenure<sub>i</sub> + &#947;<sub>3</sub>Tenure<sup>2</sup><sub>i</sub> + &#947;<sub>4</sub>Education<sub>i</sub><br>
+&nbsp;&nbsp;+ &#948;<sub>j</sub>Department<sub>j</sub> + &#966;<sub>k</sub>Country<sub>k</sub> + &#949;<sub>i</sub><br><br>
+Key coefficients:<br>
+&nbsp;&nbsp;&#946;<sub>1</sub> = baseline gender effect (female penalty, holding all else equal)<br>
+&nbsp;&nbsp;&#946;<sub>2</sub> = parenthood effect (common to both genders)<br>
+&nbsp;&nbsp;&#946;<sub>3</sub> = interaction: the <em>additional</em> penalty of being female AND a parent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(i.e., the motherhood penalty net of the baseline gender effect and fatherhood effect)
+            </div>
+
+            <h4>Analytical Pipeline</h4>
+            <div class="method-steps">
+              <div class="method-step">
+                <div class="method-step-num">01</div>
+                <div class="method-step-title">Data Extraction</div>
+                <div class="method-step-desc">Global HRIS data extracted for all active employees as of December 2024. Variables: total compensation, job level, tenure, department, education, country, gender, parental status.</div>
+              </div>
+              <div class="method-step">
+                <div class="method-step-num">02</div>
+                <div class="method-step-title">Cleaning and Harmonization</div>
+                <div class="method-step-desc">Compensation converted to USD using 12-month average exchange rates. Job levels harmonized across country-specific grading systems to Takeda global bands (L1-L12).</div>
+              </div>
+              <div class="method-step">
+                <div class="method-step-num">03</div>
+                <div class="method-step-title">Statistical Modeling</div>
+                <div class="method-step-desc">OLS regression on log total compensation with full covariate set. Blinder-Oaxaca decomposition estimated using Neumark (1988) pooled specification as robustness check.</div>
+              </div>
+              <div class="method-step">
+                <div class="method-step-num">04</div>
+                <div class="method-step-title">Validation and Reporting</div>
+                <div class="method-step-desc">Results validated against prior-year audit. Sensitivity analysis conducted on model specification. Regional breakdowns computed for countries with n > 200 employees.</div>
+              </div>
+            </div>
+
+            <h4>Career Path Simulator Assumptions</h4>
+            <ul>
+              <li>Base salary: $75,000 (constant across all scenarios at year 0)</li>
+              <li>Annual raise, no children: 5.0% (includes merit, promotion probability, and inflation)</li>
+              <li>1 child, full-time return: 0% raise in birth year, 2% year +1, 3% year +2, then 4% thereafter (permanently reduced from 5%)</li>
+              <li>1 child, part-time: salary drops to 55% in year of birth, flat year +1, returns to ~95% of pre-child level year +2, then 3.5% raises</li>
+              <li>2 children: first child penalty as above, second child at year +3 from first, cumulative effect on experience and promotion probability</li>
+            </ul>
+
+            <h4>Data Sources</h4>
+            <ul>
+              <li>Kleven, H., Landais, C., and Sogaard, J.E. (2019). "Children and Gender Inequality: Evidence from Denmark." <em>American Economic Journal: Applied Economics</em>, 11(4), 181-209.</li>
+              <li>Kleven, H., Landais, C., Poschke, M., Rink, A., and Sogaard, J.E. (2019). "Child Penalties across Countries: Evidence and Explanations." <em>AEA Papers and Proceedings</em>, 109, 122-126.</li>
+              <li>Goldin, C. (2014). "A Grand Gender Convergence: Its Last Chapter." <em>American Economic Review</em>, 104(4), 1091-1119.</li>
+              <li>Bertrand, M., Goldin, C., and Katz, L.F. (2010). "Dynamics of the Gender Gap for Young Professionals in the Financial and Corporate Sectors." <em>American Economic Journal: Applied Economics</em>, 2(3), 228-255.</li>
+              <li>Budig, M.J. and England, P. (2001). "The Wage Penalty for Motherhood." <em>American Sociological Review</em>, 66(2), 204-225.</li>
+              <li>Andresen, M.E. and Nix, E. (2022). "What Causes the Child Penalty? Evidence from Adopting and Same-Sex Couples." <em>Journal of Labor Economics</em>, 40(4), 971-1004.</li>
+              <li>World Economic Forum. (2024). <em>Global Gender Gap Report 2024</em>.</li>
+              <li>OECD. (2024). <em>OECD Family Database</em>.</li>
+              <li>Takeda Pharmaceutical Company. (2024). <em>Annual Report 2024</em>. Employee count: approximately 49,000.</li>
+              <li>Kuziemko, I., Pan, J., Shen, J., and Washington, E. (2018). "The Mommy Effect: Do Women Anticipate the Employment Effects of Motherhood?" NBER Working Paper No. 24740.</li>
+            </ul>
+
+            <h4>Limitations</h4>
+            <ul>
+              <li>Internal Takeda compensation data presented in this report is synthetic and generated for illustrative purposes only. Actual internal audit results are confidential and proprietary.</li>
+              <li>The Blinder-Oaxaca decomposition fundamentally cannot distinguish between discrimination and unobserved productivity differences (e.g., skill depreciation during extended leave, differences in work intensity preferences). The "unexplained" component is an upper bound on potential discrimination.</li>
+              <li>Cross-country pay gap comparisons are complicated by differences in compensation structures (base salary vs. bonus vs. equity), cost of living, purchasing power parity, and local reporting conventions.</li>
+              <li>Personal stories presented in this report are composites drawn from published accounts, anonymized interviews, and publicly reported experiences. Names and identifying details have been changed to protect individual privacy.</li>
+              <li>The career path simulator uses deliberately simplified assumptions about raise rates, promotion probabilities, and leave durations. Real career trajectories are substantially more heterogeneous and influenced by many factors beyond parental status.</li>
+              <li>Child penalty estimates for India and Brazil are based on smaller and less nationally representative datasets than those available for Denmark, the UK, and other OECD countries. These estimates should be treated as indicative rather than precise.</li>
+            </ul>
+
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     FOOTER
-     ═══════════════════════════════════════════════════════════ -->
-<footer>
-  <p><strong>The Motherhood Penalty</strong> — A Computational Journalism Investigation</p>
-  <p>Published by the Takeda Global Benefits Analytics Team, in partnership with <span style="color:#0F62FE;font-weight:600">IBM Consulting</span></p>
-  <p style="margin-top:16px">This analysis uses synthetic internal data for illustrative purposes.<br>Takeda is committed to closing identified gaps through targeted correction programs.</p>
-  <p style="margin-top:24px;opacity:0.5">© 2026 Takeda Pharmaceutical Company Limited. All rights reserved.</p>
+<!-- ============================================================
+     SECTION 12: FOOTER
+     ============================================================ -->
+<footer class="site-footer" id="footer">
+  <div class="footer-logo">Takeda x IBM Consulting</div>
+  <hr class="footer-divider">
+  <p>Published by Takeda Global Benefits Analytics Team, in partnership with IBM Consulting.</p>
+  <p>This analysis uses synthetic internal data for illustrative purposes. Takeda is committed to pay equity across its global workforce.</p>
+  <div class="spacer-sm"></div>
+  <p style="font-size:0.72rem;color:#555;">Copyright 2026 Takeda Pharmaceutical Company Limited. All rights reserved.</p>
 </footer>
 
-<!-- ═══════════════════════════════════════════════════════════
+<!-- ============================================================
      JAVASCRIPT
-     ═══════════════════════════════════════════════════════════ -->
+     ============================================================ -->
 <script>
-// ── Dark Mode ─────────────────────────────────────────────────
-const toggle = document.getElementById('darkToggle');
-const saved = localStorage.getItem('darkMode');
-if (saved === 'true') { document.documentElement.classList.add('dark'); toggle.textContent = '☾'; }
-
-toggle.addEventListener('click', () => {
-  document.documentElement.classList.toggle('dark');
-  const isDark = document.documentElement.classList.contains('dark');
-  toggle.textContent = isDark ? '☾' : '☀';
-  localStorage.setItem('darkMode', isDark);
-  // Update charts for dark mode
-  updateAllChartColors();
-});
-
-function getChartColors() {
-  const isDark = document.documentElement.classList.contains('dark');
-  return {
-    text: isDark ? '#e0e0e0' : '#2d2d2d',
-    grid: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
-    textLight: isDark ? '#aaa' : '#666',
-  };
-}
-
-// ── Intersection Observer for Animations ──────────────────────
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      // Trigger counter animations
-      entry.target.querySelectorAll('[data-target]').forEach(el => {
-        if (!el.dataset.counted) animateCounter(el);
-      });
-    }
-  });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-// Also observe stat items in hero (they're not in .fade-in)
-document.querySelectorAll('.stat-value[data-target]').forEach(el => {
-  const wrapper = document.createElement('span');
-  observer.observe(el.closest('.stat-item') || el);
-});
-
-// ── Animated Counters ─────────────────────────────────────────
-function animateCounter(el) {
-  el.dataset.counted = 'true';
-  const target = parseInt(el.dataset.target);
-  const prefix = el.dataset.prefix || '';
-  const suffix = el.dataset.suffix || '';
-  const useComma = el.dataset.format === 'comma';
-  const duration = 2000;
-  const start = performance.now();
-
-  function update(now) {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-    const current = Math.floor(eased * target);
-    const formatted = useComma ? current.toLocaleString() : current;
-    el.textContent = prefix + formatted + suffix;
-    if (progress < 1) requestAnimationFrame(update);
-  }
-  requestAnimationFrame(update);
-}
-
-// Start hero counters on load
-setTimeout(() => {
-  document.querySelectorAll('.stat-value[data-target]').forEach(el => {
-    if (!el.dataset.counted) animateCounter(el);
-  });
-}, 500);
-
-// ── Chart Data ────────────────────────────────────────────────
-const YEARS = [-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10];
-const FATHER = [97,98,100,102,104,105,106,107,108,109,110,111,112,113];
-const MOTHERS = {
-  'US':      [97,99,100,70,65,67,69,70,71,72,72,73,73,73],
-  'Japan':   [97,99,100,55,48,50,53,55,57,58,59,60,60,61],
-  'Germany': [98,99,100,62,55,58,61,63,65,66,67,68,68,69],
-  'Denmark': [97,99,100,79,74,76,78,79,80,80,81,81,82,82],
-  'UK':      [97,99,100,74,68,70,72,73,74,75,75,76,76,76],
-  'Sweden':  [97,99,100,75,72,76,80,82,83,84,85,85,86,86],
-  'India':   [97,99,100,52,45,47,49,51,52,53,54,54,55,55],
-  'Brazil':  [97,99,100,65,58,60,62,64,65,66,67,67,68,68],
-};
-const COUNTRY_COLORS = {
-  'US': '#e63946', 'Japan': '#457b9d', 'Germany': '#2a9d8f',
-  'Denmark': '#f4a261', 'UK': '#264653', 'Sweden': '#e9c46a',
-  'India': '#9b2226', 'Brazil': '#606c38',
-};
-
-const CAREER = Array.from({length:21}, (_,i) => i);
-const SCENARIOS = {
-  none: { label: 'No Children', color: '#2a9d8f', data: [] },
-  fulltime: { label: '1 Child — Full-Time Return', color: '#457b9d', data: [] },
-  parttime: { label: '1 Child — Part-Time 2yr', color: '#e9c46a', data: [] },
-  two: { label: '2 Children', color: '#e63946', data: [] },
-};
-
-// Generate career data
 (function() {
-  let cum = 0;
-  for (let y = 0; y <= 20; y++) {
-    const salary = 50000 * Math.pow(1.055, y) * (1 + (y >= 5 ? 0.05 : 0) + (y >= 10 ? 0.05 : 0) + (y >= 15 ? 0.05 : 0));
-    cum += salary;
-    SCENARIOS.none.data.push(Math.round(cum / 1000));
-  }
-  // 1 child full-time
-  cum = 0;
-  for (let y = 0; y <= 20; y++) {
-    let salary;
-    if (y < 5) salary = 50000 * Math.pow(1.055, y);
-    else if (y === 5) salary = 0; // leave
-    else salary = 50000 * Math.pow(1.055, 5) * 0.92 * Math.pow(1.045, y - 6) * (1 + (y >= 12 ? 0.04 : 0));
-    cum += salary;
-    SCENARIOS.fulltime.data.push(Math.round(cum / 1000));
-  }
-  // Part-time
-  cum = 0;
-  for (let y = 0; y <= 20; y++) {
-    let salary;
-    if (y < 5) salary = 50000 * Math.pow(1.055, y);
-    else if (y === 5) salary = 0;
-    else if (y <= 7) salary = 50000 * Math.pow(1.055, 5) * 0.5 * Math.pow(1.02, y - 6);
-    else salary = 50000 * Math.pow(1.055, 5) * 0.5 * Math.pow(1.02, 2) * Math.pow(1.04, y - 8) * 2 * 0.85;
-    cum += salary;
-    SCENARIOS.parttime.data.push(Math.round(cum / 1000));
-  }
-  // 2 children
-  cum = 0;
-  for (let y = 0; y <= 20; y++) {
-    let salary;
-    if (y < 5) salary = 50000 * Math.pow(1.055, y);
-    else if (y === 5 || y === 8) salary = 0;
-    else if (y === 6 || y === 7) salary = 50000 * Math.pow(1.055, 5) * 0.88 * Math.pow(1.035, y - 6);
-    else salary = 50000 * Math.pow(1.055, 5) * 0.82 * Math.pow(1.038, y - 9) * (1 + (y >= 14 ? 0.03 : 0));
-    cum += salary;
-    SCENARIOS.two.data.push(Math.round(cum / 1000));
-  }
-})();
+  'use strict';
 
-// ── Chart 1: Child Penalty ────────────────────────────────────
-const ctx1 = document.getElementById('childPenaltyChart').getContext('2d');
-const childChart = new Chart(ctx1, {
-  type: 'line',
-  data: {
-    labels: YEARS.map(y => y >= 0 ? `+${y}` : y),
-    datasets: [
-      {
-        label: 'Fathers (average)',
-        data: FATHER,
-        borderColor: '#4a90d9',
-        backgroundColor: 'rgba(74,144,217,0.1)',
-        borderWidth: 3,
-        pointRadius: 3,
-        fill: false,
-        borderDash: [],
-      },
-      ...['US','Japan','Denmark'].map(c => ({
-        label: `Mothers — ${c}`,
-        data: MOTHERS[c],
-        borderColor: COUNTRY_COLORS[c],
-        borderWidth: 2,
-        pointRadius: 2,
-        borderDash: [6,3],
-        fill: false,
-      }))
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: true,
-    aspectRatio: 2.2,
-    interaction: { intersect: false, mode: 'index' },
-    plugins: {
-      legend: { position: 'bottom', labels: { font: { family: 'Inter', size: 11 }, usePointStyle: true, padding: 20 } },
-      annotation: {}
-    },
-    scales: {
-      x: { title: { display: true, text: 'Years relative to first child', font: { family: 'Inter', size: 12 } }, grid: { display: false } },
-      y: { title: { display: true, text: 'Earnings (pre-birth = 100)', font: { family: 'Inter', size: 12 } }, min: 40, max: 120, grid: { color: 'rgba(0,0,0,0.06)' } },
+  /* ============================================================
+     DARK MODE
+     ============================================================ */
+  var darkToggle = document.getElementById('darkModeToggle');
+  var darkIcon = document.getElementById('darkModeIcon');
+  var htmlEl = document.documentElement;
+
+  function setTheme(theme) {
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem('motherhood-penalty-theme', theme);
+    if (theme === 'dark') {
+      darkIcon.textContent = '\u2606';
+    } else {
+      darkIcon.textContent = '\u263E';
     }
   }
-});
 
-// Country toggles
-document.getElementById('countryToggles').addEventListener('click', e => {
-  if (!e.target.classList.contains('toggle-btn')) return;
-  e.target.classList.toggle('active');
-  updateChildChart();
-});
-
-function updateChildChart() {
-  const active = [...document.querySelectorAll('#countryToggles .toggle-btn.active')].map(b => b.dataset.country);
-  childChart.data.datasets = [
-    { label: 'Fathers (average)', data: FATHER, borderColor: '#4a90d9', borderWidth: 3, pointRadius: 3, fill: false },
-    ...active.map(c => ({
-      label: `Mothers — ${c}`,
-      data: MOTHERS[c],
-      borderColor: COUNTRY_COLORS[c],
-      borderWidth: 2,
-      pointRadius: 2,
-      borderDash: [6,3],
-      fill: false,
-    }))
-  ];
-  childChart.update();
-}
-
-// ── Chart 2: Career Simulator ─────────────────────────────────
-const ctx2 = document.getElementById('careerSimChart').getContext('2d');
-const careerChart = new Chart(ctx2, {
-  type: 'line',
-  data: {
-    labels: CAREER,
-    datasets: Object.entries(SCENARIOS).map(([key, s]) => ({
-      label: s.label,
-      data: s.data,
-      borderColor: s.color,
-      borderWidth: key === 'none' ? 3 : 2,
-      borderDash: key === 'none' ? [] : [6,3],
-      pointRadius: 0,
-      fill: false,
-      _key: key,
-    }))
-  },
-  options: {
-    responsive: true,
-    aspectRatio: 2.2,
-    interaction: { intersect: false, mode: 'index' },
-    plugins: { legend: { position: 'bottom', labels: { font: { family: 'Inter', size: 11 }, usePointStyle: true, padding: 20 } } },
-    scales: {
-      x: { title: { display: true, text: 'Career Year', font: { family: 'Inter', size: 12 } }, grid: { display: false } },
-      y: { title: { display: true, text: 'Cumulative Earnings ($K)', font: { family: 'Inter', size: 12 } }, grid: { color: 'rgba(0,0,0,0.06)' } },
-    }
+  var savedTheme = localStorage.getItem('motherhood-penalty-theme');
+  if (savedTheme) {
+    setTheme(savedTheme);
   }
-});
 
-document.getElementById('scenarioToggles').addEventListener('click', e => {
-  if (!e.target.classList.contains('toggle-btn')) return;
-  e.target.classList.toggle('active');
-  const active = [...document.querySelectorAll('#scenarioToggles .toggle-btn.active')].map(b => b.dataset.scenario);
-  careerChart.data.datasets = Object.entries(SCENARIOS)
-    .filter(([key]) => active.includes(key))
-    .map(([key, s]) => ({
-      label: s.label, data: s.data, borderColor: s.color,
-      borderWidth: key === 'none' ? 3 : 2,
-      borderDash: key === 'none' ? [] : [6,3],
-      pointRadius: 0, fill: false,
-    }));
-  careerChart.update();
-});
+  darkToggle.addEventListener('click', function() {
+    var current = htmlEl.getAttribute('data-theme');
+    var next = (current === 'dark') ? 'light' : 'dark';
+    setTheme(next);
+    updateChartsTheme();
+  });
 
-// ── Chart 3: Decomposition ────────────────────────────────────
-const ctx3 = document.getElementById('decompositionChart').getContext('2d');
-new Chart(ctx3, {
-  type: 'bar',
-  data: {
-    labels: ['Job Level\n(5.8%)', 'Experience\n(3.1%)', 'Dept/Education\n(2.4%)', 'Unexplained\n(2.9%)'],
-    datasets: [{
-      data: [5.8, 3.1, 2.4, 2.9],
-      backgroundColor: ['#457b9d', '#457b9d', '#457b9d', '#e63946'],
-      borderRadius: 6,
-      barThickness: 50,
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    aspectRatio: 2.5,
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => `${ctx.raw}% of total ${14.2}% raw gap` } }
-    },
-    scales: {
-      x: { title: { display: true, text: 'Percentage Points', font: { family: 'Inter' } }, max: 8, grid: { color: 'rgba(0,0,0,0.06)' } },
-      y: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12 } } }
-    }
-  }
-});
-
-// ── Chart 4: Regional Gap ─────────────────────────────────────
-const regionData = [
-  {c:'Japan',g:18.3},{c:'India',g:16.8},{c:'China',g:14.1},{c:'Brazil',g:13.5},
-  {c:'US',g:12.1},{c:'UK',g:10.7},{c:'Germany',g:9.4},{c:'Singapore',g:8.9},
-  {c:'Australia',g:8.1},{c:'Switzerland',g:7.2}
-].reverse();
-
-const ctx4 = document.getElementById('regionalGapChart').getContext('2d');
-new Chart(ctx4, {
-  type: 'bar',
-  data: {
-    labels: regionData.map(d => d.c),
-    datasets: [{
-      data: regionData.map(d => d.g),
-      backgroundColor: regionData.map(d => d.g > 12 ? '#e63946' : d.g > 9 ? '#f4a261' : '#2a9d8f'),
-      borderRadius: 4,
-      barThickness: 28,
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    aspectRatio: 2,
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => `Raw pay gap: ${ctx.raw}%` } }
-    },
-    scales: {
-      x: { title: { display: true, text: 'Raw Gender Pay Gap (%)', font: { family: 'Inter' } }, max: 22, grid: { color: 'rgba(0,0,0,0.06)' } },
-      y: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 11 } } }
-    }
-  }
-});
-
-// ── Chart 5: Parenthood Effect ────────────────────────────────
-const ctx5 = document.getElementById('parenthoodChart').getContext('2d');
-new Chart(ctx5, {
-  type: 'bar',
-  data: {
-    labels: ['Men\nNo Children', 'Men\nWith Children', 'Women\nNo Children', 'Women\nWith Children'],
-    datasets: [{
-      data: [112000, 115000, 104000, 89000],
-      backgroundColor: ['#4a90d9', '#4a90d9', '#e85d75', '#e63946'],
-      borderRadius: 8,
-      barThickness: 60,
-    }]
-  },
-  options: {
-    responsive: true,
-    aspectRatio: 2.2,
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => `$${ctx.raw.toLocaleString()}` } }
-    },
-    scales: {
-      x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 11 } } },
-      y: {
-        title: { display: true, text: 'Avg Total Compensation (USD)', font: { family: 'Inter' } },
-        min: 0, max: 130000,
-        ticks: { callback: v => '$' + (v/1000) + 'K', font: { family: 'Inter' } },
-        grid: { color: 'rgba(0,0,0,0.06)' }
+  /* ============================================================
+     SCROLL ANIMATIONS (Intersection Observer)
+     ============================================================ */
+  var fadeEls = document.querySelectorAll('.fade-in-up');
+  var scrollObserver = new IntersectionObserver(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting) {
+        entries[i].target.classList.add('visible');
+        // Animate horizontal bars inside this element
+        var bars = entries[i].target.querySelectorAll('.hbar-fill');
+        for (var b = 0; b < bars.length; b++) {
+          (function(bar) {
+            setTimeout(function() {
+              bar.style.width = bar.getAttribute('data-width');
+            }, 200 + b * 80);
+          })(bars[b]);
+        }
+        scrollObserver.unobserve(entries[i].target);
       }
     }
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+  for (var f = 0; f < fadeEls.length; f++) {
+    scrollObserver.observe(fadeEls[f]);
   }
-});
 
-// ── Chart 6: Policy Comparison ────────────────────────────────
-const policyCountries = ['Denmark','Sweden','Germany','US','Japan','India','Brazil'];
-const ctx6 = document.getElementById('policyChart').getContext('2d');
-new Chart(ctx6, {
-  type: 'bar',
-  data: {
-    labels: policyCountries,
-    datasets: [
-      { label: 'Paid Leave (weeks)', data: [52,69,58,0,58,26,17], backgroundColor: '#457b9d', borderRadius: 4 },
-      { label: 'Father Quota (weeks)', data: [11,13,0,0,4,0,5], backgroundColor: '#2a9d8f', borderRadius: 4 },
-      { label: 'Motherhood Penalty (%)', data: [12,10,32,37,45,48,35], backgroundColor: '#e63946', borderRadius: 4 },
-    ]
-  },
-  options: {
-    responsive: true,
-    aspectRatio: 2.2,
-    plugins: { legend: { position: 'bottom', labels: { font: { family: 'Inter', size: 11 }, usePointStyle: true, padding: 20 } } },
-    scales: {
-      x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 11 } } },
-      y: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { family: 'Inter' } } },
+  /* ============================================================
+     ANIMATED COUNTERS
+     ============================================================ */
+  function animateCounters() {
+    var counters = document.querySelectorAll('.hero-stat-number');
+    for (var c = 0; c < counters.length; c++) {
+      (function(el) {
+        var target = parseInt(el.getAttribute('data-target'), 10);
+        var prefix = el.getAttribute('data-prefix') || '';
+        var suffix = el.getAttribute('data-suffix') || '';
+        var duration = 2000;
+        var startTime = null;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          // Ease out cubic
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var current = Math.floor(eased * target);
+          el.textContent = prefix + current.toLocaleString() + suffix;
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          }
+        }
+        requestAnimationFrame(step);
+      })(counters[c]);
     }
   }
-});
 
-// ── Regional Tabs ─────────────────────────────────────────────
-document.getElementById('regionTabs').addEventListener('click', e => {
-  if (!e.target.classList.contains('region-tab')) return;
-  document.querySelectorAll('.region-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.region-content').forEach(c => c.classList.remove('active'));
-  e.target.classList.add('active');
-  document.getElementById('region-' + e.target.dataset.region).classList.add('active');
-});
+  setTimeout(animateCounters, 1200);
 
-// ── Appendix Toggle ───────────────────────────────────────────
-document.getElementById('appendixToggle').addEventListener('click', function() {
-  this.classList.toggle('open');
-  document.getElementById('appendixBody').classList.toggle('open');
-});
+  /* ============================================================
+     CHART THEME HELPERS
+     ============================================================ */
+  function getChartTextColor() {
+    return htmlEl.getAttribute('data-theme') === 'dark' ? '#b0b0b0' : '#666';
+  }
 
-// ── Dark Mode Chart Update ────────────────────────────────────
-function updateAllChartColors() {
-  const colors = getChartColors();
-  Chart.helpers.each(Chart.instances, chart => {
-    if (chart.options.scales?.x) {
-      chart.options.scales.x.ticks = { ...chart.options.scales.x.ticks, color: colors.textLight };
-      if (chart.options.scales.x.title) chart.options.scales.x.title.color = colors.textLight;
+  function getChartGridColor() {
+    return htmlEl.getAttribute('data-theme') === 'dark' ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.06)';
+  }
+
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.font.size = 12;
+  Chart.defaults.color = getChartTextColor();
+
+  /* ============================================================
+     CHART 1: CHILD PENALTY BY COUNTRY (Line Chart)
+     ============================================================ */
+  var cpLabels = ['-3','-2','-1','0','+1','+2','+3','+4','+5','+6','+7','+8','+9','+10'];
+
+  var countryData = {
+    US: {
+      mothers: [98, 99, 100, 68, 62, 65, 68, 70, 71, 72, 72, 73, 73, 74],
+      fathers: [99, 100, 100, 101, 102, 103, 104, 105, 105, 106, 106, 107, 107, 108],
+      note: 'United States: No federal paid leave. Average penalty ~30-37%. Recovery stalls around year 4-5.'
+    },
+    JP: {
+      mothers: [97, 99, 100, 55, 48, 50, 52, 55, 57, 58, 59, 60, 61, 62],
+      fathers: [99, 100, 100, 101, 102, 103, 104, 104, 105, 106, 106, 107, 107, 108],
+      note: 'Japan: Generous leave policy undermined by cultural norms. Penalty ~40-50%. M-shaped participation curve.'
+    },
+    DE: {
+      mothers: [98, 99, 100, 60, 55, 58, 61, 63, 65, 67, 68, 69, 70, 71],
+      fathers: [99, 100, 100, 101, 102, 103, 103, 104, 105, 105, 106, 106, 107, 107],
+      note: 'Germany: Long leave options lead to extended gaps. Penalty ~25-35%. Minijob trap on return.'
+    },
+    UK: {
+      mothers: [98, 99, 100, 72, 67, 69, 71, 73, 74, 75, 76, 77, 77, 78],
+      fathers: [99, 100, 100, 101, 102, 102, 103, 104, 104, 105, 105, 106, 106, 107],
+      note: 'United Kingdom: Moderate statutory leave. Penalty ~20-28%. Part-time trap common among returning mothers.'
+    },
+    DK: {
+      mothers: [99, 100, 100, 79, 76, 78, 80, 82, 83, 84, 85, 86, 86, 87],
+      fathers: [99, 100, 100, 101, 101, 102, 103, 103, 104, 104, 105, 105, 106, 106],
+      note: 'Denmark: Father quotas and universal childcare. Penalty ~10-15%. Smallest gap but still persistent.'
+    },
+    SE: {
+      mothers: [99, 100, 100, 82, 79, 81, 83, 85, 86, 87, 88, 88, 89, 89],
+      fathers: [99, 100, 100, 101, 101, 102, 102, 103, 103, 104, 104, 105, 105, 105],
+      note: 'Sweden: 90-day father quota, subsidized childcare from age 1. Penalty ~10-12%. Best-case scenario globally.'
+    },
+    IN: {
+      mothers: [97, 98, 100, 52, 45, 47, 48, 50, 51, 52, 53, 54, 55, 56],
+      fathers: [99, 100, 100, 101, 102, 103, 104, 105, 106, 107, 107, 108, 108, 109],
+      note: 'India: 26 weeks formal sector leave, but 70%+ of women never return after childbirth. Penalty ~45-55%.'
+    },
+    BR: {
+      mothers: [98, 99, 100, 65, 58, 60, 62, 64, 65, 66, 67, 68, 68, 69],
+      fathers: [99, 100, 100, 101, 102, 103, 104, 104, 105, 106, 106, 107, 107, 108],
+      note: 'Brazil: 120-day leave in formal sector. Severe informal-formal divide. Penalty ~30-40%.'
     }
-    if (chart.options.scales?.y) {
-      chart.options.scales.y.ticks = { ...chart.options.scales.y.ticks, color: colors.textLight };
-      chart.options.scales.y.grid = { ...chart.options.scales.y.grid, color: colors.grid };
-      if (chart.options.scales.y.title) chart.options.scales.y.title.color = colors.textLight;
+  };
+
+  var cpCtx = document.getElementById('childPenaltyChart').getContext('2d');
+  var activeCountry = 'US';
+
+  var childPenaltyChart = new Chart(cpCtx, {
+    type: 'line',
+    data: {
+      labels: cpLabels,
+      datasets: [
+        {
+          label: 'Mothers',
+          data: countryData.US.mothers,
+          borderColor: '#e63946',
+          backgroundColor: 'rgba(230,57,70,0.08)',
+          borderWidth: 3,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          pointBackgroundColor: '#e63946',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 1.5,
+          tension: 0.35,
+          fill: true
+        },
+        {
+          label: 'Fathers',
+          data: countryData.US.fathers,
+          borderColor: '#457b9d',
+          backgroundColor: 'rgba(69,123,157,0.05)',
+          borderWidth: 3,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          pointBackgroundColor: '#457b9d',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 1.5,
+          tension: 0.35,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { usePointStyle: true, padding: 20, font: { size: 13 } }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(26,26,46,0.92)',
+          titleFont: { size: 13 },
+          bodyFont: { size: 12 },
+          padding: 12,
+          cornerRadius: 8,
+          callbacks: {
+            title: function(items) {
+              var yr = items[0].label;
+              return 'Year ' + yr + ' relative to first child';
+            },
+            label: function(item) {
+              return item.dataset.label + ': ' + item.raw + ' (index)';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Years relative to first child birth', font: { size: 12 }, color: getChartTextColor() },
+          grid: { color: getChartGridColor() },
+          ticks: { color: getChartTextColor() }
+        },
+        y: {
+          title: { display: true, text: 'Earnings index (pre-birth = 100)', font: { size: 12 }, color: getChartTextColor() },
+          min: 40,
+          max: 115,
+          grid: { color: getChartGridColor() },
+          ticks: { color: getChartTextColor() }
+        }
+      }
     }
-    if (chart.options.plugins?.legend?.labels) {
-      chart.options.plugins.legend.labels.color = colors.textLight;
-    }
-    chart.update('none');
   });
-}
+
+  // Country toggle handler
+  var countryNoteEl = document.getElementById('countryNote');
+
+  document.getElementById('countryToggles').addEventListener('click', function(e) {
+    var btn = e.target;
+    if (!btn.classList.contains('toggle-btn')) return;
+    var btns = document.querySelectorAll('#countryToggles .toggle-btn');
+    for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+    btn.classList.add('active');
+    activeCountry = btn.getAttribute('data-country');
+    var d = countryData[activeCountry];
+    childPenaltyChart.data.datasets[0].data = d.mothers;
+    childPenaltyChart.data.datasets[1].data = d.fathers;
+    childPenaltyChart.update('active');
+    countryNoteEl.textContent = d.note;
+  });
+
+  /* ============================================================
+     CHART 2: CAREER PATH SIMULATOR (Line Chart)
+     ============================================================ */
+  function generateCareerData(scenario) {
+    var data = [];
+    var salary = 75000;
+    var cumulative = 0;
+    for (var y = 0; y <= 20; y++) {
+      if (scenario === 'none') {
+        if (y > 0) salary *= 1.05;
+      } else if (scenario === 'one_ft') {
+        if (y > 0 && y < 5) salary *= 1.05;
+        else if (y === 5) salary *= 0.92;
+        else if (y === 6) salary *= 1.02;
+        else if (y === 7) salary *= 1.03;
+        else if (y > 7) salary *= 1.04;
+      } else if (scenario === 'one_pt') {
+        if (y > 0 && y < 5) salary *= 1.05;
+        else if (y === 5) salary *= 0.55;
+        else if (y === 6) salary *= 1.0;
+        else if (y === 7) salary *= 1.80;
+        else if (y > 7) salary *= 1.035;
+      } else if (scenario === 'two') {
+        if (y > 0 && y < 5) salary *= 1.05;
+        else if (y === 5) salary *= 0.90;
+        else if (y === 6) salary *= 1.01;
+        else if (y === 7) salary *= 1.02;
+        else if (y === 8) salary *= 0.88;
+        else if (y === 9) salary *= 1.01;
+        else if (y > 9) salary *= 1.03;
+      }
+      cumulative += salary;
+      data.push(Math.round(cumulative / 1000));
+    }
+    return data;
+  }
+
+  var cpathLabels = [];
+  for (var yi = 0; yi <= 20; yi++) { cpathLabels.push(yi.toString()); }
+
+  var scenarioConfigs = {
+    none:   { label: 'No Children',                 color: '#457b9d', dash: [] },
+    one_ft: { label: '1 Child, Full-time Return',   color: '#e63946', dash: [] },
+    one_pt: { label: '1 Child, Part-time 2 Years',  color: '#e9a84c', dash: [6,3] },
+    two:    { label: '2 Children',                   color: '#9b5de5', dash: [3,3] }
+  };
+
+  var activeScenarios = ['none', 'one_ft', 'one_pt', 'two'];
+
+  function buildCareerDatasets() {
+    var datasets = [];
+    for (var s = 0; s < activeScenarios.length; s++) {
+      var key = activeScenarios[s];
+      var cfg = scenarioConfigs[key];
+      datasets.push({
+        label: cfg.label,
+        data: generateCareerData(key),
+        borderColor: cfg.color,
+        backgroundColor: 'transparent',
+        borderWidth: 2.5,
+        borderDash: cfg.dash,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: cfg.color,
+        tension: 0.3,
+        fill: false
+      });
+    }
+    return datasets;
+  }
+
+  var cpathCtx = document.getElementById('careerPathChart').getContext('2d');
+
+  var careerPathChart = new Chart(cpathCtx, {
+    type: 'line',
+    data: {
+      labels: cpathLabels,
+      datasets: buildCareerDatasets()
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { usePointStyle: true, padding: 16, font: { size: 12 } }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(26,26,46,0.92)',
+          padding: 12,
+          cornerRadius: 8,
+          callbacks: {
+            title: function(items) { return 'Career Year ' + items[0].label; },
+            label: function(item) {
+              return item.dataset.label + ': $' + item.raw.toLocaleString() + 'K cumulative';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Career Year', font: { size: 12 }, color: getChartTextColor() },
+          grid: { color: getChartGridColor() },
+          ticks: { color: getChartTextColor() }
+        },
+        y: {
+          title: { display: true, text: 'Cumulative Earnings ($K)', font: { size: 12 }, color: getChartTextColor() },
+          grid: { color: getChartGridColor() },
+          ticks: { color: getChartTextColor() }
+        }
+      }
+    }
+  });
+
+  // Scenario toggle handler
+  document.getElementById('scenarioToggles').addEventListener('click', function(e) {
+    var btn = e.target;
+    if (!btn.classList.contains('toggle-btn')) return;
+    var scenario = btn.getAttribute('data-scenario');
+    btn.classList.toggle('active');
+    var idx = activeScenarios.indexOf(scenario);
+    if (idx > -1) {
+      activeScenarios.splice(idx, 1);
+    } else {
+      activeScenarios.push(scenario);
+    }
+    careerPathChart.data.datasets = buildCareerDatasets();
+    careerPathChart.update();
+  });
+
+  /* ============================================================
+     CHART 3: PARENTHOOD EFFECT (Grouped Bar Chart)
+     ============================================================ */
+  var phCtx = document.getElementById('parenthoodChart').getContext('2d');
+
+  var parenthoodChart = new Chart(phCtx, {
+    type: 'bar',
+    data: {
+      labels: [
+        'Men without children',
+        'Men with children',
+        'Women without children',
+        'Women with children'
+      ],
+      datasets: [{
+        label: 'Compensation Index',
+        data: [100, 102, 94, 81],
+        backgroundColor: [
+          'rgba(69,123,157,0.8)',
+          'rgba(69,123,157,1)',
+          'rgba(230,57,70,0.6)',
+          'rgba(230,57,70,1)'
+        ],
+        borderColor: [
+          '#3a6a87',
+          '#3a6a87',
+          '#c1121f',
+          '#c1121f'
+        ],
+        borderWidth: 1.5,
+        borderRadius: 6,
+        barPercentage: 0.65
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(26,26,46,0.92)',
+          padding: 12,
+          cornerRadius: 8,
+          callbacks: {
+            label: function(item) {
+              var label = 'Index: ' + item.raw;
+              if (item.raw === 100) label += ' (baseline)';
+              if (item.raw === 102) label += ' (fatherhood bonus)';
+              if (item.raw === 81) label += ' (motherhood penalty)';
+              return label;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 11 }, maxRotation: 0, color: getChartTextColor() }
+        },
+        y: {
+          title: { display: true, text: 'Compensation Index (childless men = 100)', font: { size: 12 }, color: getChartTextColor() },
+          min: 70,
+          max: 110,
+          grid: { color: getChartGridColor() },
+          ticks: { color: getChartTextColor() }
+        }
+      }
+    }
+  });
+
+  /* ============================================================
+     CHART 4: REGIONAL PENALTY SEVERITY (Horizontal Bar)
+     ============================================================ */
+  var rpCtx = document.getElementById('regionalPenaltyChart').getContext('2d');
+
+  var regionalPenaltyChart = new Chart(rpCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Sweden', 'Denmark', 'UK', 'Germany', 'US', 'Brazil', 'Japan', 'India'],
+      datasets: [{
+        label: 'Estimated Long-run Earnings Penalty (%)',
+        data: [11, 13, 24, 30, 35, 36, 45, 52],
+        backgroundColor: function(context) {
+          var val = context.raw;
+          if (val <= 15) return 'rgba(42,157,143,0.8)';
+          if (val <= 25) return 'rgba(69,123,157,0.8)';
+          if (val <= 35) return 'rgba(233,168,76,0.8)';
+          return 'rgba(230,57,70,0.8)';
+        },
+        borderColor: function(context) {
+          var val = context.raw;
+          if (val <= 15) return '#1f7a6d';
+          if (val <= 25) return '#3a6a87';
+          if (val <= 35) return '#c4862e';
+          return '#c1121f';
+        },
+        borderWidth: 1.5,
+        borderRadius: 4,
+        barPercentage: 0.7
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(26,26,46,0.92)',
+          padding: 12,
+          cornerRadius: 8,
+          callbacks: {
+            label: function(item) {
+              return 'Estimated penalty: ~' + item.raw + '% long-run earnings loss';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Estimated Penalty (%)', font: { size: 12 }, color: getChartTextColor() },
+          min: 0,
+          max: 60,
+          grid: { color: getChartGridColor() },
+          ticks: { color: getChartTextColor(), callback: function(v) { return v + '%'; } }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { font: { size: 12 }, color: getChartTextColor() }
+        }
+      }
+    }
+  });
+
+  /* ============================================================
+     CHART 5: LEAVE UPTAKE (Grouped Bar)
+     ============================================================ */
+  var luCtx = document.getElementById('leaveUptakeChart').getContext('2d');
+
+  var leaveUptakeChart = new Chart(luCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Japan', 'US', 'Germany', 'UK', 'Sweden', 'Denmark', 'India', 'Brazil'],
+      datasets: [
+        {
+          label: 'Women - Leave Uptake (%)',
+          data: [96, 89, 94, 91, 98, 97, 78, 85],
+          backgroundColor: 'rgba(230,57,70,0.75)',
+          borderColor: '#c1121f',
+          borderWidth: 1,
+          borderRadius: 4,
+          barPercentage: 0.8,
+          categoryPercentage: 0.7
+        },
+        {
+          label: 'Men - Leave Uptake (%)',
+          data: [14, 34, 42, 22, 89, 82, 8, 18],
+          backgroundColor: 'rgba(69,123,157,0.75)',
+          borderColor: '#3a6a87',
+          borderWidth: 1,
+          borderRadius: 4,
+          barPercentage: 0.8,
+          categoryPercentage: 0.7
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2.2,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { usePointStyle: true, padding: 16, font: { size: 12 } }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(26,26,46,0.92)',
+          padding: 12,
+          cornerRadius: 8,
+          callbacks: {
+            label: function(item) {
+              return item.dataset.label + ': ' + item.raw + '%';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 11 }, color: getChartTextColor() }
+        },
+        y: {
+          title: { display: true, text: 'Leave Uptake Rate (%)', font: { size: 12 }, color: getChartTextColor() },
+          min: 0,
+          max: 100,
+          grid: { color: getChartGridColor() },
+          ticks: { color: getChartTextColor() }
+        }
+      }
+    }
+  });
+
+  /* ============================================================
+     REGIONAL TABS
+     ============================================================ */
+  document.getElementById('regionTabs').addEventListener('click', function(e) {
+    var btn = e.target;
+    if (!btn.classList.contains('tab-btn')) return;
+    var allBtns = document.querySelectorAll('#regionTabs .tab-btn');
+    for (var t = 0; t < allBtns.length; t++) { allBtns[t].classList.remove('active'); }
+    btn.classList.add('active');
+    var tabId = btn.getAttribute('data-tab');
+    var allPanels = document.querySelectorAll('.tab-panel');
+    for (var p = 0; p < allPanels.length; p++) { allPanels[p].classList.remove('active'); }
+    document.getElementById('panel-' + tabId).classList.add('active');
+  });
+
+  /* ============================================================
+     TECHNICAL APPENDIX TOGGLE
+     ============================================================ */
+  document.getElementById('appendixToggle').addEventListener('click', function() {
+    this.classList.toggle('open');
+    document.getElementById('appendixContent').classList.toggle('open');
+  });
+
+  /* ============================================================
+     READING PROGRESS BAR
+     ============================================================ */
+  var progressBar = document.getElementById('readingProgress');
+
+  function updateProgress() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var progress = (scrollTop / docHeight) * 100;
+    progressBar.style.width = progress + '%';
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  /* ============================================================
+     SMOOTH SCROLL FOR INTERNAL LINKS
+     ============================================================ */
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ============================================================
+     THEME UPDATE FOR ALL CHARTS
+     ============================================================ */
+  function updateChartsTheme() {
+    var textColor = getChartTextColor();
+    var gridColor = getChartGridColor();
+    var allCharts = [childPenaltyChart, careerPathChart, parenthoodChart, regionalPenaltyChart, leaveUptakeChart];
+
+    for (var ci = 0; ci < allCharts.length; ci++) {
+      var chart = allCharts[ci];
+      if (chart.options.scales.x.grid) chart.options.scales.x.grid.color = gridColor;
+      if (chart.options.scales.y.grid) chart.options.scales.y.grid.color = gridColor;
+      if (chart.options.scales.x.ticks) chart.options.scales.x.ticks.color = textColor;
+      if (chart.options.scales.y.ticks) chart.options.scales.y.ticks.color = textColor;
+      if (chart.options.scales.x.title) chart.options.scales.x.title.color = textColor;
+      if (chart.options.scales.y.title) chart.options.scales.y.title.color = textColor;
+      if (chart.options.plugins.legend && chart.options.plugins.legend.labels) {
+        chart.options.plugins.legend.labels.color = textColor;
+      }
+      chart.update();
+    }
+  }
+
+})();
 </script>
+
 </body>
 </html>
